@@ -3,6 +3,7 @@ import User from "../models/user.model";
 import { compare, hash } from "bcryptjs";
 import { generateTokenAndSetCookie } from "../utils/generateTokenAndSetCookie";
 import { CreateUserType } from "../types/CreateUserType";
+import { CustomRequest } from "../middlewares/verifyToken";
 
 type LoginUserType = Omit<CreateUserType, "username">;
 
@@ -101,4 +102,24 @@ export async function registerController(
     console.log("Error in registerController: " + error.message);
     res.status(500).json({ success: false, msg: "Internal server error" });
   }
+}
+
+export async function checkAuth(req: CustomRequest, res: Response) {
+  const user = await User.findById(req.userId);
+
+  if (!user) {
+    res.status(400).json({ success: false, msg: "No user found" });
+    return;
+  }
+
+  res.status(200).json({
+    success: true,
+    user: {
+      username: user.username,
+      email: user.email,
+      password: undefined,
+      createdAt: user.createdAt,
+      updatedAt: user.updatedAt,
+    },
+  });
 }
