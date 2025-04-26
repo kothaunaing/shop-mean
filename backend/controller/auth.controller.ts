@@ -40,7 +40,7 @@ export async function loginController(req: Request, res: Response) {
       msg: "Logged in successfully",
       user: {
         username: user.username,
-        password: null,
+        password: undefined,
         email: user.email,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
@@ -122,4 +122,9 @@ export async function checkAuth(req: CustomRequest, res: Response) {
       updatedAt: user.updatedAt,
     },
   });
+}
+
+export async function logoutController(req: Request, res: Response) {
+  res.clearCookie("token");
+  res.status(200).json({ success: false, msg: "Logged out successfully" });
 }

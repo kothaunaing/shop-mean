@@ -7,9 +7,11 @@ const dotenv_1 = require("dotenv");
 const express_1 = __importDefault(require("express"));
 const index_1 = __importDefault(require("./routes/index"));
 const connectDB_1 = require("./db/connectDB");
+const cookie_parser_1 = __importDefault(require("cookie-parser"));
 (0, dotenv_1.configDotenv)();
 const app = (0, express_1.default)();
 app.use(express_1.default.json());
+app.use((0, cookie_parser_1.default)());
 app.use("/api", index_1.default);
 const PORT = process.env.PORT;
 app.listen(PORT, () => {

@@ -14,6 +14,8 @@ var __importDefault = (this && this.__importDefault) || function (mod) {
 Object.defineProperty(exports, "__esModule", { value: true });
 exports.loginController = loginController;
 exports.registerController = registerController;
+exports.checkAuth = checkAuth;
+exports.logoutController = logoutController;
 const user_model_1 = __importDefault(require("../models/user.model"));
 const bcryptjs_1 = require("bcryptjs");
 const generateTokenAndSetCookie_1 = require("../utils/generateTokenAndSetCookie");
@@ -40,10 +42,10 @@ function loginController(req, res) {
             (0, generateTokenAndSetCookie_1.generateTokenAndSetCookie)(user._id, res);
             res.status(200).json({
                 success: false,
-                msg: "",
+                msg: "Logged in successfully",
                 user: {
                     username: user.username,
-                    password: null,
+                    password: undefined,
                     email: user.email,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
@@ -97,5 +99,30 @@ function registerController(req, res) {
             console.log("Error in registerController: " + error.message);
             res.status(500).json({ success: false, msg: "Internal server error" });
         }
+    });
+}
+function checkAuth(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield user_model_1.default.findById(req.userId);
+        if (!user) {
+            res.status(400).json({ success: false, msg: "No user found" });
+            return;
+        }
+        res.status(200).json({
+            success: true,
+            user: {
+                username: user.username,
+                email: user.email,
+                password: undefined,
+                createdAt: user.createdAt,
+                updatedAt: user.updatedAt,
+            },
+        });
+    });
+}
+function logoutController(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        res.clearCookie("token");
+        res.status(200).json({ success: false, msg: "Logged out successfully" });
     });
 }
