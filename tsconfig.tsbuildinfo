@@ -1,0 +1,1 @@
+{"root":["./backend/server.ts","./backend/controller/auth.controller.ts","./backend/db/connectdb.ts","./backend/models/user.model.ts","./backend/routes/auth.route.ts","./backend/routes/index.ts","./backend/types/createusertype.ts","./backend/utils/generatetokenandsetcookie.ts"],"version":"5.8.3"}
