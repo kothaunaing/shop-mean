@@ -1,0 +1,14 @@
+<header-component />
+
+<main class="max-w-4xl mx-auto">
+  <div class="m-2">
+    <div>This is home page</div>
+    @if (authService.currentUser){
+    <div>
+      <div>{{ authService.currentUser.username }}</div>
+      <div>{{ authService.currentUser.email }}</div>
+      <div>{{ authService.currentUser.createdAt }}</div>
+    </div>
+    }
+  </div>
+</main>

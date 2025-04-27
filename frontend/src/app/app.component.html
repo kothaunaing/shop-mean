@@ -1,0 +1,11 @@
+@if(authService.checkingAuth()){
+<div
+  class="text-amber-600 font-semibold min-h-screen flex items-center justify-center"
+>
+  <div>
+    <p>Loading, please wait...</p>
+  </div>
+</div>
+} @else {
+<router-outlet />
+}

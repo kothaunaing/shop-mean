@@ -1,0 +1,56 @@
+import { HttpClient } from '@angular/common/http';
+import { inject, Injectable, signal } from '@angular/core';
+import { CreateUserType, CurrentUserType, LoginUserType } from '../types/types';
+import { catchError, throwError } from 'rxjs';
+import { Router } from '@angular/router';
+
+@Injectable({
+  providedIn: 'root',
+})
+export class AuthServices {
+  checkingAuth = signal(true);
+  currentUser: CurrentUserType | null = null;
+  private http = inject(HttpClient);
+  private apiUrl = 'http://localhost:5000/api/auth';
+
+  constructor(private router: Router) {}
+
+  register(data: CreateUserType) {
+    return this.http.post(this.apiUrl + '/register', data, {
+      withCredentials: true,
+    });
+  }
+
+  login(data: LoginUserType) {
+    return this.http.post(this.apiUrl + '/login', data, {
+      withCredentials: true,
+    });
+  }
+
+  logout() {
+    this.http
+      .get(this.apiUrl + '/logout', { withCredentials: true })
+      .subscribe((res) => {
+        console.log('Logged out successfully');
+      });
+    this.router.navigate(['/login']);
+    this.currentUser = null;
+  }
+
+  checkAuth() {
+    this.checkingAuth.set(true);
+    this.http
+      .get(this.apiUrl + '/check-auth', { withCredentials: true })
+      .pipe(
+        catchError((error: any) => {
+          this.checkingAuth.set(false);
+          this.router.navigate(['/login']);
+          return throwError(() => new Error('Something went wrong'));
+        })
+      )
+      .subscribe((res: any) => {
+        this.checkingAuth.set(false);
+        this.currentUser = res.user;
+      });
+  }
+}

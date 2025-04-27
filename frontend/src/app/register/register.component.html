@@ -1,0 +1,92 @@
+@if (authService.currentUser){
+<div
+  class="text-amber-600 font-semibold min-h-screen flex items-center justify-center"
+>
+  <div>
+    <p>
+      You already logged in. Go to
+      <a class="underline font-bold" routerLink="/">Home</a> page
+    </p>
+  </div>
+</div>
+} @else {
+
+<main class="max-w-3xl mx-auto min-h-screen flex items-center justify-center">
+  <div class="w-full m-2">
+    <h2 class="font-semibold text-2xl text-center mb-10">
+      Create A New Account
+    </h2>
+    <form
+      (submit)="
+        $event.preventDefault();
+        register({
+          email: email.value,
+          name: fullName.value,
+          password: password.value,
+          username: username.value
+        })
+      "
+      class="space-y-2"
+    >
+      <div>
+        <p class="font-semibold text-lg mb-2">Name</p>
+        <label class="border p-3 block">
+          <input
+            #fullName
+            class="outline-none p-1 w-full"
+            placeholder="Enter your full name"
+          />
+        </label>
+      </div>
+      <div>
+        <p class="font-semibold text-lg mb-2">Username</p>
+        <label class="border p-3 block">
+          <input
+            #username
+            class="outline-none p-1 w-full"
+            placeholder="Enter your username"
+          />
+        </label>
+      </div>
+      <div>
+        <p class="font-semibold text-lg mb-2">Email</p>
+        <label class="border p-3 block">
+          <input
+            #email
+            type="email"
+            class="outline-none p-1 w-full"
+            placeholder="Enter your email"
+          />
+        </label>
+      </div>
+      <div>
+        <p class="font-semibold text-lg mb-2">Password</p>
+        <label class="border p-3 block">
+          <input
+            #password
+            type="password"
+            class="outline-none p-1 w-full"
+            placeholder="Enter your password"
+          />
+        </label>
+      </div>
+      @if (errorMessage()){
+      <div class="text-red-600 font-semibold">{{ errorMessage() }}</div>
+      }
+      <button
+        [disabled]="loading()"
+        type="submit"
+        class="bg-yellow-500 w-full p-3 text-lg font-semibold rounded-md hover:opacity-60 cursor-pointer"
+      >
+        {{ loading() ? "Registering..." : "Register" }}
+      </button>
+    </form>
+    <div class="m-2">
+      Already have an account?
+      <a class="text-blue-600 hover:underline" routerLink="/login"
+        >Login here.</a
+      >
+    </div>
+  </div>
+</main>
+}

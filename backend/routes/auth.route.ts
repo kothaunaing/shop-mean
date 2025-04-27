@@ -13,8 +13,8 @@ router.post("/login", loginController);
 
 router.post("/register", registerController);
 
-router.post("/check-auth", verifyToken, checkAuth);
+router.get("/check-auth", verifyToken, checkAuth);
 
-router.post("/logout", logoutController);
+router.get("/logout", logoutController);
 
 export default router;

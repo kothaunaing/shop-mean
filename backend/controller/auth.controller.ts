@@ -39,6 +39,7 @@ export async function loginController(req: Request, res: Response) {
       success: false,
       msg: "Logged in successfully",
       user: {
+        name: user.name,
         username: user.username,
         password: undefined,
         email: user.email,
@@ -53,13 +54,17 @@ export async function loginController(req: Request, res: Response) {
 }
 
 export async function registerController(
-  req: Request<{}, {}, { username: string; email: string; password: string }>,
+  req: Request<
+    {},
+    {},
+    { username: string; email: string; password: string; name: string }
+  >,
   res: Response
 ) {
-  const { username, email, password } = req.body;
+  const { name, username, email, password } = req.body;
 
   try {
-    if (!username.trim() || !email.trim() || !password.trim()) {
+    if (!username.trim() || !email.trim() || !password.trim() || !name.trim()) {
       res
         .status(400)
         .json({ success: false, msg: "Please fill all required fields" });
@@ -78,6 +83,7 @@ export async function registerController(
     const verificationCode = Math.floor(Math.random() * 900000 + 100000);
 
     const user = new User({
+      name,
       username,
       email,
       password: hashedPassword,
@@ -91,6 +97,7 @@ export async function registerController(
       success: true,
       msg: "Registered successfully",
       user: {
+        name,
         username: user.username,
         email: user.email,
         createdAt: user.createdAt,
@@ -115,6 +122,7 @@ export async function checkAuth(req: CustomRequest, res: Response) {
   res.status(200).json({
     success: true,
     user: {
+      name: user.name,
       username: user.username,
       email: user.email,
       password: undefined,
