@@ -8,22 +8,22 @@ var __awaiter = (this && this.__awaiter) || function (thisArg, _arguments, P, ge
         step((generator = generator.apply(thisArg, _arguments || [])).next());
     });
 };
+var __importDefault = (this && this.__importDefault) || function (mod) {
+    return (mod && mod.__esModule) ? mod : { "default": mod };
+};
 Object.defineProperty(exports, "__esModule", { value: true });
-const testing_1 = require("@angular/core/testing");
-const register_component_1 = require("./register.component");
-describe('RegisterComponent', () => {
-    let component;
-    let fixture;
-    beforeEach(() => __awaiter(void 0, void 0, void 0, function* () {
-        yield testing_1.TestBed.configureTestingModule({
-            imports: [register_component_1.RegisterComponent]
-        })
-            .compileComponents();
-        fixture = testing_1.TestBed.createComponent(register_component_1.RegisterComponent);
-        component = fixture.componentInstance;
-        fixture.detectChanges();
-    }));
-    it('should create', () => {
-        expect(component).toBeTruthy();
+exports.checkForAdmin = checkForAdmin;
+const user_model_1 = __importDefault(require("../models/user.model"));
+function checkForAdmin(req, res, next) {
+    return __awaiter(this, void 0, void 0, function* () {
+        const user = yield user_model_1.default.findById(req.userId);
+        if ((user === null || user === void 0 ? void 0 : user.role) !== "admin") {
+            res.status(400).json({
+                success: false,
+                msg: "You are not authorized to do such operation",
+            });
+            return;
+        }
+        next();
     });
-});
+}

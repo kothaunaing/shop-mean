@@ -1,20 +1,20 @@
 @if(confirmLogout()){
-<div class="fixed z-20 inset-0 flex items-center justify-center">
+<div class="fixed z-30 inset-0 flex items-center justify-center bg-black/20">
   <div
-    class="m-2 flex flex-col items-center justify-center shadow-md p-4 rounded-md border border-slate-200 bg-white"
+    class="m-2 flex flex-col items-center justify-center shadow-md p-4 rounded-xl border border-slate-200 bg-white"
   >
     <h2 class="text-xl">Are you sure to log out?</h2>
     <div>
       <div class="flex justify-start gap-2 items-center mt-2">
         <button
           (click)="confirmYes()"
-          class="bg-blue-500 p-2 rounded-md mt-2 cursor-pointer hover:opacity-60 font-semibold text-white"
+          class="bg-blue-500 p-2 rounded-2xl mt-2 cursor-pointer hover:opacity-60 font-semibold text-white px-6"
         >
           Yes
         </button>
         <button
           (click)="confirmNo()"
-          class="bg-blue-500 p-2 rounded-md mt-2 cursor-pointer hover:opacity-60 font-semibold text-white"
+          class="bg-blue-500 p-2 rounded-2xl mt-2 cursor-pointer hover:opacity-60 font-semibold text-white px-6"
         >
           No
         </button>
@@ -24,40 +24,70 @@
 </div>
 }
 
-<header class="container mx-auto p-3 m-2 border-b border-b-amber-200">
+<header
+  class="container mx-auto p-3 m-2 border-b border-b-amber-200 shadow-xl md:rounded-l-xl md:rounded-r-xl"
+>
   <div class="flex justify-between">
     <h1 class="font-bold text-amber-500 text-2xl">
       <a routerLink="/">Shop</a>
     </h1>
 
-    <div class="flex group relative cursor-pointer">
-      <button
-        (click)="toggleAccountDetails()"
-        class="hover:shadow-md rounded-full cursor-pointer"
-      >
-        <img class="rounded-full size-10" src="profile-pic.jpg" />
-      </button>
-
-      @if (accountDetailsShown()){
-
-      <div class="absolute top-full p-4 bg-white shadow-md rounded-md right-0">
-        <p>
-          {{ authService.currentUser?.name }}
-        </p>
-        <p>
-          {{ authService.currentUser?.username }}
-        </p>
-        <p>
-          {{ authService.currentUser?.email }}
-        </p>
-        <button
-          (click)="openConfirm()"
-          class="bg-blue-500 p-2 rounded-md mt-2 cursor-pointer hover:opacity-60 font-semibold text-white"
-        >
-          Log out
-        </button>
-      </div>
+    <div class="flex items-center gap-2">
+      @if(authService.currentUser?.role === "admin"){
+      <ul class="border-r border-r-slate-200 pr-4">
+        <li class="">
+          <a
+            class="hover:opacity-60 text-amber-600 font-semibold"
+            routerLink="/dashboard"
+            routerLinkActive="border-b border-b-amber-600"
+            [routerLinkActiveOptions]="{ exact: true }"
+            >Dashboard</a
+          >
+        </li>
+      </ul>
       }
+
+      <div class="flex group relative cursor-pointer">
+        <button
+          (click)="toggleAccountDetails()"
+          class="hover:shadow-md rounded-full cursor-pointer"
+        >
+          <img class="rounded-full size-10" src="profile-pic.jpg" />
+        </button>
+
+        @if (accountDetailsShown()){
+
+        <div
+          class="absolute top-full p-4 bg-white shadow-xl rounded-xl right-0 z-20 min-w-[150px]"
+        >
+          @if (authService.currentUser){
+          <p class="font-semibold">
+            {{ authService.currentUser.name }}
+          </p>
+          <p class="text-gray-600 text-sm">
+            {{ authService.currentUser.username }}
+          </p>
+          <p class="text-gray-600 text-sm">
+            {{ authService.currentUser.email }}
+          </p>
+          <button
+            (click)="openConfirm()"
+            class="bg-blue-500 p-2 rounded-2xl mt-2 cursor-pointer hover:opacity-60 font-semibold text-white"
+          >
+            Log out
+          </button>
+          } @else {
+          <a
+            routerLink="/login"
+            (click)="toggleAccountDetails()"
+            class="text-center bg-blue-500 block p-2 rounded-2xl mt-2 cursor-pointer hover:opacity-60 font-semibold text-white w-[100px]"
+          >
+            Log in
+          </a>
+          }
+        </div>
+        }
+      </div>
     </div>
   </div>
 </header>

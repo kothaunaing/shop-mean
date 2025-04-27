@@ -50,6 +50,7 @@ function loginController(req, res) {
                     email: user.email,
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
+                    role: user.role,
                 },
             });
         }
@@ -95,6 +96,7 @@ function registerController(req, res) {
                     createdAt: user.createdAt,
                     updatedAt: user.updatedAt,
                     password: undefined,
+                    role: user.role,
                 },
             });
         }
@@ -120,6 +122,7 @@ function checkAuth(req, res) {
                 password: undefined,
                 createdAt: user.createdAt,
                 updatedAt: user.updatedAt,
+                role: user.role,
             },
         });
     });

@@ -3,6 +3,7 @@ export interface CreateUserType {
   username: string;
   email: string;
   password: string;
+  role: string;
 }
 
 export interface LoginUserType {

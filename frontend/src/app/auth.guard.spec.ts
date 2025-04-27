@@ -1,11 +1,11 @@
 import { TestBed } from '@angular/core/testing';
 import { CanActivateFn } from '@angular/router';
 
-import { redirectIfAuthenticatedGuard } from './redirect-if-authenticated.guard';
+import { authGuard } from './auth.guard';
 
-describe('redirectIfAuthenticatedGuard', () => {
+describe('authGuard', () => {
   const executeGuard: CanActivateFn = (...guardParameters) => 
-      TestBed.runInInjectionContext(() => redirectIfAuthenticatedGuard(...guardParameters));
+      TestBed.runInInjectionContext(() => authGuard(...guardParameters));
 
   beforeEach(() => {
     TestBed.configureTestingModule({});
