@@ -25,12 +25,14 @@
 
 }
 
-<div class="group rounded-2xl p-4 shadow-xl cursor-pointer">
-  <div class="relative overflow-hidden rounded-md">
-    <img
-      class="scale-100 group-hover:scale-125 transition-transform duration-200"
-      [src]="productData.image"
-    />
+<div class="group rounded-2xl p-4 shadow-xl">
+  <div class="relative overflow-hidden rounded-md min-h-[150px]">
+    <a [routerLink]="`/product/${productData._id}`">
+      <img
+        class="scale-100 group-hover:scale-125 transition-transform duration-200 cursor-pointer"
+        [src]="productData.image"
+      />
+    </a>
     @if(authService.currentUser?.role === "admin"){
     <button
       (click)="toggleMoreOptions()"

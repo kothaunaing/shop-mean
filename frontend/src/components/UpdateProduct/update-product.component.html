@@ -10,12 +10,24 @@
           <fa-icon [icon]="faXMark"></fa-icon>
         </button>
       </div>
-      <form class="space-y-2 mt-4">
+      <form
+        (submit)="
+          updateProduct($event, {
+            _id: addProductService.updateProduct?._id,
+            name: name.value,
+            price: price.value,
+            description: description.value,
+            image: image.value,
+            discount: discount.value
+          })
+        "
+        class="space-y-2 mt-4"
+      >
         <div>
           <p class="font-semibold text-lg mb-2">Name</p>
           <label class="border p-3 block">
             <input
-              #productName
+              #name
               [value]="addProductService.updateProduct?.name"
               class="outline-none p-1 w-full"
               placeholder="Enter product name"
@@ -26,6 +38,7 @@
           <p class="font-semibold text-lg mb-2">Description</p>
           <label class="border p-3 block">
             <textarea
+              #description
               [value]="addProductService.updateProduct?.description || ''"
               class="outline-none p-1 w-full"
               placeholder="Enter product description (optional)"
@@ -36,6 +49,7 @@
           <p class="font-semibold text-lg mb-2">Price</p>
           <label class="border p-3 block">
             <input
+              #price
               [value]="addProductService.updateProduct?.price"
               class="outline-none p-1 w-full"
               placeholder="Enter product price"
@@ -46,6 +60,7 @@
           <p class="font-semibold text-lg mb-2">Discount</p>
           <label class="border p-3 block">
             <input
+              #discount
               [value]="addProductService.updateProduct?.discount || ''"
               class="outline-none p-1 w-full"
               placeholder="Enter product discount (optional)"
@@ -56,6 +71,7 @@
           <p class="font-semibold text-lg mb-2">Image</p>
           <label class="border p-3 block">
             <input
+              #image
               [value]="addProductService.updateProduct?.image"
               class="outline-none p-1 w-full"
               placeholder="Enter product image url"
@@ -63,13 +79,16 @@
           </label>
         </div>
 
-        <div class="text-red-600 font-semibold">errorMessage</div>
+        @if (errorMessage()){
+        <div class="text-red-600 font-semibold">{{ errorMessage() }}</div>
+        }
 
         <button
+          [disabled]="updatingProduct()"
           type="submit"
           class="bg-yellow-500 w-full p-3 text-lg font-semibold rounded-md hover:opacity-60 cursor-pointer"
         >
-          Create
+          {{ updatingProduct() ? "Updating..." : "Update" }}
         </button>
       </form>
     </div>

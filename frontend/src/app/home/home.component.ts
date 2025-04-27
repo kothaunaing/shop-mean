@@ -3,7 +3,7 @@ import { AuthServices } from '../../services/auth.services';
 import { SingleProductComponent } from '../../components/SingleProduct/single-product.component';
 import { AddProductService } from '../../services/add-product.service';
 import { UpdateProductComponent } from '../../components/UpdateProduct/update-product.component';
-import { ProductServices } from '../../services/prouducts.service';
+import { ProductServices } from '../../services/products.service';
 import { ActivatedRoute } from '@angular/router';
 import { PaginationComponent } from '../../components/Pagination/pagination.component';
 

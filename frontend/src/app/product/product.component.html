@@ -1,30 +1,57 @@
 <main class="max-w-2xl mx-auto">
+  @if(loadingProduct()){
+  <div class="flex justify-center items-center h-[100px]">
+    <p>Loading...</p>
+  </div>
+  } @else if(product) {
   <div class="m-2">
-    <div
-      class="group rounded-2xl p-4 shadow-xl cursor-pointer hover:opacity-80"
-    >
+    <div class="group rounded-2xl p-4 shadow-xl">
       <div class="relative overflow-hidden rounded-md">
         <img
-          class="scale-100 group-hover:scale-125 transition-transform duration-200"
-          src="https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D"
+          class="scale-100 transition-transform duration-200"
+          [src]="product.image"
         />
         <div
-          class="absolute top-2 left-2 p-2 bg-gray-600/70 font-bold rounded-md text-white"
+          class="absolute top-1 left-1 p-2 bg-gray-600/70 font-bold rounded-md text-white"
         >
-          $300
+          @if (product.discount){
+          <p>
+            <span class="line-through">
+              {{ "$" + product.price.toFixed(2) }}
+            </span>
+            {{ " " + product.discount }}% OFF
+          </p>
+          <p>
+            {{
+              "$" +
+                (
+                  product!.price -
+                  product!.price * (product.discount / 100)
+                ).toFixed(2)
+            }}
+          </p>
+
+          } @else {
+          {{ "$" + product.price }}
+          }
         </div>
       </div>
       <div>
         <div class="font-semibold mt-2 flex justify-between">
-          <p>Laptop</p>
+          <p>{{ product.name }}</p>
           <button
             class="p-2 bg-amber-500 rounded-2xl hover:opacity-60 cursor-pointer w-[100px]"
           >
             Buy
           </button>
         </div>
-        <div class="text-sm text-gray-600">Good laptop</div>
+        <div class="text-sm text-gray-600">{{ product.description }}</div>
       </div>
     </div>
   </div>
+  } @else {
+  <div class="flex justify-center items-center h-[100px]">
+    <p>No product found...</p>
+  </div>
+  }
 </main>

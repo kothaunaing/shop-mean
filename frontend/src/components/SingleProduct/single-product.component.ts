@@ -7,12 +7,13 @@ import {
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
 import { AuthServices } from '../../services/auth.services';
-import { UpdateProductComponent } from '../UpdateProduct/update-product.component';
 import { AddProductService } from '../../services/add-product.service';
+import { RouterLink } from '@angular/router';
+import { ProductServices } from '../../services/products.service';
 
 @Component({
   selector: 'single-product-component',
-  imports: [FontAwesomeModule, UpdateProductComponent],
+  imports: [FontAwesomeModule, RouterLink],
   templateUrl: 'single-product.component.html',
 })
 export class SingleProductComponent {
@@ -26,7 +27,7 @@ export class SingleProductComponent {
   }
 
   confirmDeleteYes() {
-    // yesfun
+    this.productService.deleteProduct(this.productData._id!);
     this.confirmDelete.set(false);
   }
 
@@ -48,7 +49,8 @@ export class SingleProductComponent {
 
   constructor(
     public authService: AuthServices,
-    public addProductService: AddProductService
+    public addProductService: AddProductService,
+    public productService: ProductServices
   ) {
     effect(() => {
       document.body.style.overflow = this.confirmDelete() ? 'hidden' : '';

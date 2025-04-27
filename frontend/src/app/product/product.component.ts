@@ -1,5 +1,7 @@
-import { Component } from '@angular/core';
+import { Component, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
+import { ProductDataType } from '../../types/types';
+import axios from 'axios';
 
 @Component({
   selector: 'app-product',
@@ -8,11 +10,30 @@ import { ActivatedRoute } from '@angular/router';
   styleUrl: './product.component.css',
 })
 export class ProductComponent {
+  apiUrl = 'http://localhost:5000/api/product';
   productId: string | null = null;
+  product: ProductDataType | null = null;
+  loadingProduct = signal(false);
 
   constructor(private route: ActivatedRoute) {}
 
+  async fetchAProduct() {
+    try {
+      this.loadingProduct.set(true);
+      const res: any = await axios.get(this.apiUrl + '/get/' + this.productId, {
+        withCredentials: true,
+      });
+      this.product = res.data.product;
+      console.log(res.data);
+    } catch (error: any) {
+      console.log('Error in fetchAlProduct: ' + error.message);
+    } finally {
+      this.loadingProduct.set(false);
+    }
+  }
+
   ngOnInit() {
     this.productId = this.route.snapshot.paramMap.get('id');
+    this.fetchAProduct();
   }
 }
