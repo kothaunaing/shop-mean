@@ -3,7 +3,7 @@ export interface CreateUserType {
   username: string;
   email: string;
   password: string;
-  role: string;
+  role?: string;
 }
 
 export interface LoginUserType {
@@ -15,3 +15,14 @@ export type CurrentUserType = Omit<CreateUserType, 'password'> & {
   createdAt: string;
   updatedAt: string;
 };
+
+export interface ProductDataType {
+  _id?: string;
+  updatedAt?: string;
+  createdAt?: string;
+  name: string;
+  price: number;
+  discount?: number;
+  description?: string;
+  image: string;
+}

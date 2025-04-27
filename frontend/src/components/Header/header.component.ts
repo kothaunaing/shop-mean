@@ -1,17 +1,26 @@
 import { Component, effect, signal } from '@angular/core';
-import { RouterLink, RouterLinkActive } from '@angular/router';
+import { RouterLink } from '@angular/router';
 import { AuthServices } from '../../services/auth.services';
+import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { AddNewProductComponent } from '../AddNewProduct/add-new-product.component';
+import { AddProductService } from '../../services/add-product.service';
+import { faAdd } from '@fortawesome/free-solid-svg-icons';
 
 @Component({
-  imports: [RouterLink, RouterLinkActive],
+  imports: [RouterLink, FontAwesomeModule, AddNewProductComponent],
   selector: 'header-component',
   templateUrl: 'header.component.html',
 })
 export class HeaderComponent {
   accountDetailsShown = signal(false);
 
+  faAdd = faAdd;
+
   confirmLogout = signal(false);
-  constructor(public authService: AuthServices) {
+  constructor(
+    public authService: AuthServices,
+    public addProductService: AddProductService
+  ) {
     effect(() => {
       document.body.style.overflow = this.confirmLogout() ? 'hidden' : '';
     });

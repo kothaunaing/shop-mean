@@ -22,6 +22,8 @@
     </div>
   </div>
 </div>
+} @if (addProductService.creatingNewProduct()){
+<add-new-product-component />
 }
 
 <header
@@ -33,20 +35,24 @@
     </h1>
 
     <div class="flex items-center gap-2">
-      @if(authService.currentUser?.role === "admin"){
-      <ul class="border-r border-r-slate-200 pr-4">
-        <li class="">
-          <a
-            class="hover:opacity-60 text-amber-600 font-semibold"
-            routerLink="/dashboard"
-            routerLinkActive="border-b border-b-amber-600"
-            [routerLinkActiveOptions]="{ exact: true }"
-            >Dashboard</a
-          >
-        </li>
-      </ul>
-      }
+      @if(authService.currentUser){
 
+      <div
+        class="border rounded-2xl border-amber-600 px-2 flex items-center gap-2 py-1"
+      >
+        @if(authService.currentUser.role === "admin"){
+        <button
+          (click)="addProductService.openNewProductForm()"
+          class="text-lg hover:shadow-md size-10 rounded-full cursor-pointer hover:opacity-60 font-semibold"
+        >
+          <fa-icon [icon]="faAdd" />
+        </button>
+        }
+        <p class="font-semibold text">
+          {{ authService.currentUser.role?.toUpperCase() }}
+        </p>
+      </div>
+      }
       <div class="flex group relative cursor-pointer">
         <button
           (click)="toggleAccountDetails()"
@@ -65,7 +71,7 @@
             {{ authService.currentUser.name }}
           </p>
           <p class="text-gray-600 text-sm">
-            {{ authService.currentUser.username }}
+            {{ "@" + authService.currentUser.username }}
           </p>
           <p class="text-gray-600 text-sm">
             {{ authService.currentUser.email }}

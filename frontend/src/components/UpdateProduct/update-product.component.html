@@ -1,0 +1,77 @@
+<div class="fixed inset-0 bg-black/40 backdrop-blur-md z-30 overflow-auto">
+  <div class="text-white max-w-3xl mx-auto">
+    <div class="m-2">
+      <div class="flex justify-between items-center">
+        <p class="text-xl font-bold">Update Existing Product</p>
+        <button
+          (click)="addProductService.closeUpdatingProduct()"
+          class="text-xl hover:shadow-md size-10 rounded-full cursor-pointer hover:opacity-60 font-semibold"
+        >
+          <fa-icon [icon]="faXMark"></fa-icon>
+        </button>
+      </div>
+      <form class="space-y-2 mt-4">
+        <div>
+          <p class="font-semibold text-lg mb-2">Name</p>
+          <label class="border p-3 block">
+            <input
+              #productName
+              [value]="addProductService.updateProduct?.name"
+              class="outline-none p-1 w-full"
+              placeholder="Enter product name"
+            />
+          </label>
+        </div>
+        <div>
+          <p class="font-semibold text-lg mb-2">Description</p>
+          <label class="border p-3 block">
+            <textarea
+              [value]="addProductService.updateProduct?.description || ''"
+              class="outline-none p-1 w-full"
+              placeholder="Enter product description (optional)"
+            ></textarea>
+          </label>
+        </div>
+        <div>
+          <p class="font-semibold text-lg mb-2">Price</p>
+          <label class="border p-3 block">
+            <input
+              [value]="addProductService.updateProduct?.price"
+              class="outline-none p-1 w-full"
+              placeholder="Enter product price"
+            />
+          </label>
+        </div>
+        <div>
+          <p class="font-semibold text-lg mb-2">Discount</p>
+          <label class="border p-3 block">
+            <input
+              [value]="addProductService.updateProduct?.discount || ''"
+              class="outline-none p-1 w-full"
+              placeholder="Enter product discount (optional)"
+            />
+          </label>
+        </div>
+        <div>
+          <p class="font-semibold text-lg mb-2">Image</p>
+          <label class="border p-3 block">
+            <input
+              [value]="addProductService.updateProduct?.image"
+              class="outline-none p-1 w-full"
+              placeholder="Enter product image url"
+            />
+          </label>
+        </div>
+
+        <div class="text-red-600 font-semibold">errorMessage</div>
+
+        <button
+          type="submit"
+          class="bg-yellow-500 w-full p-3 text-lg font-semibold rounded-md hover:opacity-60 cursor-pointer"
+        >
+          Create
+        </button>
+      </form>
+    </div>
+  </div>
+</div>

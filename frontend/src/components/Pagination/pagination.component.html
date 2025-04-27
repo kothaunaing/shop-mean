@@ -1,0 +1,33 @@
+<div class="flex justify-center items-center space-x-2 mt-4">
+  <!-- Previous button -->
+  <button
+    (click)="prevPage()"
+    [disabled]="currentPage === 1"
+    class="px-4 py-2 rounded-md border text-sm font-semibold hover:bg-amber-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Previous
+  </button>
+
+  <!-- Page numbers -->
+  <ng-container *ngFor="let page of generatePages()">
+    <button
+      (click)="goToPage(page)"
+      [ngClass]="{
+        'bg-amber-500 text-white': page === currentPage,
+        'border hover:bg-amber-100': page !== currentPage
+      }"
+      class="px-4 py-2 rounded-md text-sm font-semibold"
+    >
+      {{ page }}
+    </button>
+  </ng-container>
+
+  <!-- Next button -->
+  <button
+    (click)="nextPage()"
+    [disabled]="currentPage === totalPages"
+    class="px-4 py-2 rounded-md border text-sm font-semibold hover:bg-amber-500 hover:text-white disabled:opacity-50 disabled:cursor-not-allowed"
+  >
+    Next
+  </button>
+</div>

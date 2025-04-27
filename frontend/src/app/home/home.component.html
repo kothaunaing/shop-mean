@@ -1,80 +1,25 @@
+@if(addProductService.updatingProduct()){
+<update-product-component />
+}
 <main class="max-w-4xl mx-auto">
+  @if(productService.loadingProducts()){
+  <div class="flex justify-center items-center h-[100px]">
+    <p>Loading...</p>
+  </div>
+  } @else {
   <div class="m-2 mt-8 gap-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
-    <div
-      class="group rounded-2xl p-4 shadow-xl cursor-pointer hover:opacity-80"
-    >
-      <div class="relative overflow-hidden rounded-md">
-        <img
-          class="scale-100 group-hover:scale-125 transition-transform duration-200"
-          src="https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D"
-        />
-        <div
-          class="absolute top-2 left-2 p-2 bg-gray-600/70 font-bold rounded-md text-white"
-        >
-          $300
-        </div>
-      </div>
-      <div>
-        <div class="font-semibold mt-2">Laptop</div>
-        <div class="text-sm text-gray-600">Good laptop</div>
-      </div>
-    </div>
-    <div
-      class="group rounded-2xl p-4 shadow-xl cursor-pointer hover:opacity-80"
-    >
-      <div class="relative overflow-hidden rounded-md">
-        <img
-          class="scale-100 group-hover:scale-125 transition-transform duration-200"
-          src="https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D"
-        />
-        <div
-          class="absolute top-2 left-2 p-2 bg-gray-600/70 font-bold rounded-md text-white"
-        >
-          $300
-        </div>
-      </div>
-      <div>
-        <div class="font-semibold mt-2">Laptop</div>
-        <div class="text-sm text-gray-600">Good laptop</div>
-      </div>
-    </div>
-    <div
-      class="group rounded-2xl p-4 shadow-xl cursor-pointer hover:opacity-80"
-    >
-      <div class="relative overflow-hidden rounded-md">
-        <img
-          class="scale-100 group-hover:scale-125 transition-transform duration-200"
-          src="https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D"
-        />
-        <div
-          class="absolute top-2 left-2 p-2 bg-gray-600/70 font-bold rounded-md text-white"
-        >
-          $300
-        </div>
-      </div>
-      <div>
-        <div class="font-semibold mt-2">Laptop</div>
-        <div class="text-sm text-gray-600">Good laptop</div>
-      </div>
-    </div>
-    <div
-      class="group rounded-2xl p-4 shadow-xl cursor-pointer hover:opacity-80"
-    >
-      <div class="relative overflow-hidden rounded-md">
-        <img
-          class="scale-100 group-hover:scale-125 transition-transform duration-200"
-          src="https://images.unsplash.com/photo-1618424181497-157f25b6ddd5?fm=jpg&q=60&w=3000&ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxzZWFyY2h8M3x8bGFwdG9wJTIwY29tcHV0ZXJ8ZW58MHx8MHx8fDA%3D"
-        />
-        <div
-          class="absolute top-2 left-2 p-2 bg-gray-600/70 font-bold rounded-md text-white"
-        >
-          $300
-        </div>
-      </div>
-      <div>
-        <div class="font-semibold mt-2">Laptop</div>
-        <div class="text-sm text-gray-600">Good laptop</div>
-      </div>
-    </div>
+    @for(product of productService.productsData?.products; track product._id){
+    <single-product-component [productData]="product" />
+    }
+  </div>
+  }
+
+  <div>
+    @if (productService.productsData){
+    <app-pagination
+      [currentPage]="page"
+      [totalPages]="productService.productsData.totalPages"
+    />
+    }
   </div>
 </main>

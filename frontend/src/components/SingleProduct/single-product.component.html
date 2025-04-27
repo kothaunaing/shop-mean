@@ -1,0 +1,93 @@
+@if(confirmDelete()){
+<div class="fixed z-30 inset-0 flex items-center justify-center bg-black/20">
+  <div
+    class="m-2 flex flex-col items-center justify-center shadow-md p-4 rounded-xl border border-slate-200 bg-white"
+  >
+    <h2 class="text-xl">Are you sure to delete this product?</h2>
+    <div>
+      <div class="flex justify-start gap-2 items-center mt-2">
+        <button
+          (click)="confirmDeleteYes()"
+          class="bg-blue-500 p-2 rounded-2xl mt-2 cursor-pointer hover:opacity-60 font-semibold text-white px-6"
+        >
+          Yes
+        </button>
+        <button
+          (click)="confirmDeleteNo()"
+          class="bg-blue-500 p-2 rounded-2xl mt-2 cursor-pointer hover:opacity-60 font-semibold text-white px-6"
+        >
+          No
+        </button>
+      </div>
+    </div>
+  </div>
+</div>
+
+}
+
+<div class="group rounded-2xl p-4 shadow-xl cursor-pointer">
+  <div class="relative overflow-hidden rounded-md">
+    <img
+      class="scale-100 group-hover:scale-125 transition-transform duration-200"
+      [src]="productData.image"
+    />
+    @if(authService.currentUser?.role === "admin"){
+    <button
+      (click)="toggleMoreOptions()"
+      class="absolute right-2 top-2 p-2 bg-slate-500/50 size-10 rounded-full cursor-pointer"
+    >
+      <fa-icon [icon]="faEllipsisVertical" />
+      @if(showMoreOptions()){
+
+      <div
+        class="absolute overflow-hidden right-0 top-[110%] bg-white rounded-2xl shadow-md w-[100px] z-20"
+      >
+        <button
+          (click)="addProductService.openUpdatingProduct(productData)"
+          class="flex gap-1 items-center p-3 hover:bg-slate-400 w-full cursor-pointer"
+        >
+          <fa-icon [icon]="faPen" />
+          <span>Update</span>
+        </button>
+        <button
+          (click)="showConfirmDelete()"
+          class="flex gap-1 items-center p-3 hover:bg-slate-400 w-full cursor-pointer"
+        >
+          <fa-icon [icon]="faTrash" />
+          <span> Delete</span>
+        </button>
+      </div>
+      }
+    </button>
+    }
+
+    <div
+      class="absolute top-1 left-1 p-2 bg-gray-600/70 font-bold rounded-md text-white"
+    >
+      @if (productData.discount){
+      <p>
+        <span class="line-through">
+          {{ "$" + productData.price.toFixed(2) }}
+        </span>
+        {{ " " + productData.discount }}% OFF
+      </p>
+      <p>
+        {{
+          "$" +
+            (
+              productData.price -
+              productData.price * (productData.discount / 100)
+            ).toFixed(2)
+        }}
+      </p>
+
+      } @else {
+      {{ "$" + productData.price }}
+      }
+    </div>
+  </div>
+  <div>
+    <div class="font-semibold mt-2">{{ productData.name }}</div>
+    <div class="text-sm text-gray-600">{{ productData.description }}</div>
+  </div>
+</div>
