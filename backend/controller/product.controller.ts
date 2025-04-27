@@ -2,6 +2,8 @@ import { Request, Response } from "express";
 import Product from "../models/product.model";
 import { CustomRequest } from "../middlewares/verifyToken";
 
+const ITEMS_PER_PAGE = 10;
+
 interface Product {
   name: string;
   description?: string;
@@ -127,6 +129,58 @@ export async function updateProduct(req: CustomRequest, res: Response) {
     });
   } catch (error: any) {
     console.log("Error in updateProduct: " + error);
+    res.status(500).json({ success: false, msg: "Internal server error" });
+  }
+}
+
+export async function getAProduct(req: Request, res: Response) {
+  try {
+    const { productId } = req.params as { productId: string };
+
+    const product = await Product.findById(productId);
+
+    if (!product) {
+      res.status(400).json({ success: false, msg: "No product found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ success: true, msg: "Successfully fetched a product", product });
+  } catch (error: any) {
+    console.log("Error in getAProduct: " + error);
+    res.status(500).json({ success: false, msg: "Internal server error" });
+  }
+}
+
+export async function getAllProducts(req: Request, res: Response) {
+  try {
+    const { page } = req.query as { page: string };
+
+    const newPage = parseInt(page) || 1;
+
+    const offset = (newPage - 1) * ITEMS_PER_PAGE;
+
+    const products = await Product.find({})
+      .skip(offset)
+      .limit(ITEMS_PER_PAGE)
+      .exec();
+
+    const totalDocuments = await Product.countDocuments();
+    const totalPages = Math.ceil(totalDocuments / ITEMS_PER_PAGE);
+
+    res.status(200).json({
+      success: true,
+      msg: "Successfully fetched all products",
+      totalProducts: totalDocuments,
+      itemsPerPage: ITEMS_PER_PAGE,
+      currentPage: newPage,
+      itemsInCurrentPage: products.length,
+      totalPages,
+      products,
+    });
+  } catch (error: any) {
+    console.log("Error in getAllProducts: " + error);
     res.status(500).json({ success: false, msg: "Internal server error" });
   }
 }

@@ -2,6 +2,8 @@ import { Router } from "express";
 import {
   createNewProduct,
   deleteProduct,
+  getAllProducts,
+  getAProduct,
   updateProduct,
 } from "../controller/product.controller";
 import { verifyToken } from "../middlewares/verifyToken";
@@ -9,9 +11,9 @@ import { checkForAdmin } from "../middlewares/checkForAdmin";
 
 const router = Router();
 
-router.get("/get/all", verifyToken);
+router.get("/get-all", verifyToken, getAllProducts);
 
-router.get("/get/:productId", verifyToken);
+router.get("/get/:productId", verifyToken, getAProduct);
 
 router.post("/new", verifyToken, checkForAdmin, createNewProduct);
 
