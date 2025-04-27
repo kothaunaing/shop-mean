@@ -2,9 +2,14 @@
 Object.defineProperty(exports, "__esModule", { value: true });
 const mongoose_1 = require("mongoose");
 const userSchema = new mongoose_1.Schema({
+    name: {
+        type: String,
+        required: true,
+    },
     username: {
         required: true,
         type: String,
+        unique: true,
     },
     email: {
         type: String,

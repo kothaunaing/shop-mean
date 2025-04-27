@@ -1,7 +1,7 @@
 @if(confirmLogout()){
 <div class="fixed z-20 inset-0 flex items-center justify-center">
   <div
-    class="m-2 flex flex-col items-center justify-center shadow-md p-4 rounded-md border border-slate-200"
+    class="m-2 flex flex-col items-center justify-center shadow-md p-4 rounded-md border border-slate-200 bg-white"
   >
     <h2 class="text-xl">Are you sure to log out?</h2>
     <div>
@@ -31,11 +31,16 @@
     </h1>
 
     <div class="flex group relative cursor-pointer">
-      <img class="rounded-full size-10" src="profile-pic.jpg" />
-
-      <div
-        class="absolute hidden top-full p-4 bg-white shadow-md rounded-md right-0 group-hover:block"
+      <button
+        (click)="toggleAccountDetails()"
+        class="hover:shadow-md rounded-full cursor-pointer"
       >
+        <img class="rounded-full size-10" src="profile-pic.jpg" />
+      </button>
+
+      @if (accountDetailsShown()){
+
+      <div class="absolute top-full p-4 bg-white shadow-md rounded-md right-0">
         <p>
           {{ authService.currentUser?.name }}
         </p>
@@ -52,6 +57,7 @@
           Log out
         </button>
       </div>
+      }
     </div>
   </div>
 </header>

@@ -46,6 +46,7 @@ export class RegisterComponent {
 
     if (userData.password.length < 12) {
       this.errorMessage.set('Password must be at least 12 characters');
+      return;
     }
 
     this.loading.set(true);

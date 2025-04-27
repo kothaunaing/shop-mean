@@ -44,6 +44,7 @@ function loginController(req, res) {
                 success: false,
                 msg: "Logged in successfully",
                 user: {
+                    name: user.name,
                     username: user.username,
                     password: undefined,
                     email: user.email,
@@ -60,9 +61,9 @@ function loginController(req, res) {
 }
 function registerController(req, res) {
     return __awaiter(this, void 0, void 0, function* () {
-        const { username, email, password } = req.body;
+        const { name, username, email, password } = req.body;
         try {
-            if (!username.trim() || !email.trim() || !password.trim()) {
+            if (!username.trim() || !email.trim() || !password.trim() || !name.trim()) {
                 res
                     .status(400)
                     .json({ success: false, msg: "Please fill all required fields" });
@@ -76,6 +77,7 @@ function registerController(req, res) {
             const hashedPassword = yield (0, bcryptjs_1.hash)(password, 10);
             const verificationCode = Math.floor(Math.random() * 900000 + 100000);
             const user = new user_model_1.default({
+                name,
                 username,
                 email,
                 password: hashedPassword,
@@ -87,6 +89,7 @@ function registerController(req, res) {
                 success: true,
                 msg: "Registered successfully",
                 user: {
+                    name,
                     username: user.username,
                     email: user.email,
                     createdAt: user.createdAt,
@@ -111,6 +114,7 @@ function checkAuth(req, res) {
         res.status(200).json({
             success: true,
             user: {
+                name: user.name,
                 username: user.username,
                 email: user.email,
                 password: undefined,

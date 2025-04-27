@@ -1,4 +1,4 @@
-import { Component, signal } from '@angular/core';
+import { Component, effect, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
 import { AuthServices } from '../../services/auth.services';
 
@@ -8,6 +8,8 @@ import { AuthServices } from '../../services/auth.services';
   templateUrl: 'header.component.html',
 })
 export class HeaderComponent {
+  accountDetailsShown = signal(false);
+
   confirmLogout = signal(false);
   constructor(public authService: AuthServices) {}
 
@@ -20,5 +22,9 @@ export class HeaderComponent {
 
   confirmNo() {
     this.confirmLogout.set(false);
+  }
+
+  toggleAccountDetails() {
+    this.accountDetailsShown.update((prev) => !prev);
   }
 }

@@ -45,6 +45,7 @@ export async function loginController(req: Request, res: Response) {
         email: user.email,
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
+        role: user.role,
       },
     });
   } catch (error: any) {
@@ -103,6 +104,7 @@ export async function registerController(
         createdAt: user.createdAt,
         updatedAt: user.updatedAt,
         password: undefined,
+        role: user.role,
       },
     });
   } catch (error: any) {
@@ -128,6 +130,7 @@ export async function checkAuth(req: CustomRequest, res: Response) {
       password: undefined,
       createdAt: user.createdAt,
       updatedAt: user.updatedAt,
+      role: user.role,
     },
   });
 }
