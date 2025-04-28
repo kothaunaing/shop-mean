@@ -9,8 +9,12 @@
   } @else {
   <div>
     @if(authService.currentUser){
-    <div class="md:hidden flex justify-center mt-8">
+    <div class="md:hidden flex justify-center mt-8 mb-8">
       <search-component />
+    </div>
+    <div class="m-2 text-xl">
+      Search result for
+      <span class="font-semibold italic">{{ productService.query }}</span>
     </div>
     <div class="m-2 mt-8 gap-5 grid grid-cols-1 sm:grid-cols-2 md:grid-cols-3">
       @for(product of productService.productsData?.products; track product._id){
@@ -20,15 +24,15 @@
     <div>
       @if (productService.productsData){
       <app-pagination
-        navigationPath="/"
         [currentPage]="page"
         [totalPages]="productService.productsData.totalPages"
+        navigationPath="/search"
       />
       }
     </div>
-    }@else {
+    } @else {
     <div
-      class="text-amber-600 font-semibold h-[200px] flex items-center justify-center"
+      class="text-amber-600 font-semibold h-[100px] flex items-center justify-center"
     >
       <div>
         <p>

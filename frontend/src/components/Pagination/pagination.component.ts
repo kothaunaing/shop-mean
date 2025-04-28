@@ -1,6 +1,7 @@
 import { CommonModule } from '@angular/common';
 import { Component, Input, Output, EventEmitter } from '@angular/core';
 import { Router } from '@angular/router';
+import { ProductServices } from '../../services/products.service';
 
 @Component({
   selector: 'app-pagination',
@@ -10,27 +11,33 @@ import { Router } from '@angular/router';
 export class PaginationComponent {
   @Input() currentPage: number = 1;
   @Input() totalPages: number = 1;
+  @Input() navigationPath: string = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, public productService: ProductServices) {}
 
   goToPage(page: number) {
     if (page >= 1 && page <= this.totalPages) {
-      this.router.navigate([`/`], { queryParams: { page: page } });
+      this.router.navigate([this.navigationPath], {
+        queryParams: { page: page },
+        queryParamsHandling: 'merge',
+      });
     }
   }
 
   prevPage() {
     if (this.currentPage > 1) {
-      this.router.navigate([`/`], {
+      this.router.navigate([this.navigationPath], {
         queryParams: { page: this.currentPage - 1 },
+        queryParamsHandling: 'merge',
       });
     }
   }
 
   nextPage() {
     if (this.currentPage < this.totalPages) {
-      this.router.navigate([`/`], {
+      this.router.navigate([this.navigationPath], {
         queryParams: { page: this.currentPage + 1 },
+        queryParamsHandling: 'merge',
       });
     }
   }

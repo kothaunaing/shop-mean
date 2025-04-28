@@ -10,10 +10,11 @@ import { AuthServices } from '../../services/auth.services';
 import { AddProductService } from '../../services/add-product.service';
 import { RouterLink } from '@angular/router';
 import { ProductServices } from '../../services/products.service';
+import { SeeMoreComponent } from '../SeeMore/see-more.component';
 
 @Component({
   selector: 'single-product-component',
-  imports: [FontAwesomeModule, RouterLink],
+  imports: [FontAwesomeModule, RouterLink, SeeMoreComponent],
   templateUrl: 'single-product.component.html',
 })
 export class SingleProductComponent {

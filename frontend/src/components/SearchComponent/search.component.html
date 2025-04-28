@@ -1,0 +1,14 @@
+<div
+  class="flex flex-1 items-center justify-center max-w-[400px] border rounded-2xl gap-2 px-4 min-w-[300px] border-amber-500"
+>
+  <input
+    #query
+    [value]="productService.query"
+    (keyup)="handleSearch($event, query.value)"
+    class="w-full p-2 outline-none"
+    placeholder="Search shop..."
+  />
+  <button (click)="search(query.value)" class="cursor-pointer">
+    <fa-icon [icon]="faSearch" />
+  </button>
+</div>

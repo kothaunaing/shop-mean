@@ -1,0 +1,11 @@
+{{ defaultText }}
+
+@if(text.length > 100){ @if(showingMore()){
+<span (click)="seeLess()" class="text-blue-600 underline cursor-pointer"
+  >See less</span
+>
+} @else {
+<span (click)="seeMore()" class="text-blue-600 underline cursor-pointer"
+  >...See more</span
+>
+} }

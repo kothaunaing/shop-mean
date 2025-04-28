@@ -4,10 +4,16 @@ import { AuthServices } from '../../services/auth.services';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddNewProductComponent } from '../AddNewProduct/add-new-product.component';
 import { AddProductService } from '../../services/add-product.service';
-import { faAdd } from '@fortawesome/free-solid-svg-icons';
+import { faAdd, faSearch } from '@fortawesome/free-solid-svg-icons';
+import { SearchComponent } from '../SearchComponent/search.component';
 
 @Component({
-  imports: [RouterLink, FontAwesomeModule, AddNewProductComponent],
+  imports: [
+    RouterLink,
+    FontAwesomeModule,
+    AddNewProductComponent,
+    SearchComponent,
+  ],
   selector: 'header-component',
   templateUrl: 'header.component.html',
 })
@@ -15,6 +21,7 @@ export class HeaderComponent {
   accountDetailsShown = signal(false);
 
   faAdd = faAdd;
+  faSearch = faSearch;
 
   confirmLogout = signal(false);
   constructor(

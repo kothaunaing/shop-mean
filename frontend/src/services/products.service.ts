@@ -20,6 +20,28 @@ export class ProductServices {
   apiUrl = 'http://localhost:5000/api/product';
   productsData: ProductsData | null = null;
   loadingProducts = signal(false);
+  query: string = '';
+
+  async searchProducts(page: number = 1, query: string = '') {
+    try {
+      const searchQuery = `?query=${query}`;
+      const pageQuery = `&page=${page}`;
+
+      this.loadingProducts.set(true);
+      const res: any = await axios.get(
+        this.apiUrl + '/search' + searchQuery + pageQuery,
+        {
+          withCredentials: true,
+        }
+      );
+      this.productsData = res.data;
+      console.log(res.data);
+    } catch (error: any) {
+      console.log('Error in searchProducts: ' + error.message);
+    } finally {
+      this.loadingProducts.set(false);
+    }
+  }
 
   async fetchAllProducts(page: number = 2) {
     try {

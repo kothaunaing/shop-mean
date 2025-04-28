@@ -4,6 +4,7 @@ import {
   deleteProduct,
   getAllProducts,
   getAProduct,
+  searchProducts,
   updateProduct,
 } from "../controller/product.controller";
 import { verifyToken } from "../middlewares/verifyToken";
@@ -12,6 +13,8 @@ import { checkForAdmin } from "../middlewares/checkForAdmin";
 const router = Router();
 
 router.get("/get-all", verifyToken, getAllProducts);
+
+router.get("/search", verifyToken, searchProducts);
 
 router.get("/get/:productId", verifyToken, getAProduct);
 

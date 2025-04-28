@@ -4,8 +4,9 @@ import { SingleProductComponent } from '../../components/SingleProduct/single-pr
 import { AddProductService } from '../../services/add-product.service';
 import { UpdateProductComponent } from '../../components/UpdateProduct/update-product.component';
 import { ProductServices } from '../../services/products.service';
-import { ActivatedRoute } from '@angular/router';
+import { ActivatedRoute, RouterLink } from '@angular/router';
 import { PaginationComponent } from '../../components/Pagination/pagination.component';
+import { SearchComponent } from '../../components/SearchComponent/search.component';
 
 @Component({
   selector: 'app-home',
@@ -13,6 +14,8 @@ import { PaginationComponent } from '../../components/Pagination/pagination.comp
     SingleProductComponent,
     UpdateProductComponent,
     PaginationComponent,
+    SearchComponent,
+    RouterLink,
   ],
   templateUrl: './home.component.html',
   styleUrl: './home.component.css',

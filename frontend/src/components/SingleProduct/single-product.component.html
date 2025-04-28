@@ -25,11 +25,11 @@
 
 }
 
-<div class="group rounded-2xl p-4 shadow-xl">
+<div class="group rounded-2xl p-4 shadow-xl h-full">
   <div class="relative overflow-hidden rounded-md min-h-[150px]">
     <a [routerLink]="`/product/${productData._id}`">
       <img
-        class="scale-100 group-hover:scale-125 transition-transform duration-200 cursor-pointer"
+        class="scale-100 group-hover:scale-125 transition-transform duration-200 cursor-pointer h-[300px] w-full object-contain"
         [src]="productData.image"
       />
     </a>
@@ -90,6 +90,10 @@
   </div>
   <div>
     <div class="font-semibold mt-2">{{ productData.name }}</div>
-    <div class="text-sm text-gray-600">{{ productData.description }}</div>
+    <div class="text-sm text-gray-600">
+      @if(productData.description){
+      <see-more-component [text]="productData.description" />
+      }
+    </div>
   </div>
 </div>

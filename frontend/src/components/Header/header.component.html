@@ -27,13 +27,18 @@
 }
 
 <header
-  class="container mx-auto p-3 m-2 border-b border-b-amber-200 shadow-xl md:rounded-l-xl md:rounded-r-xl"
+  class="container mx-auto p-3 m-2 border-b border-b-amber-200 shadow-xl md:rounded-l-xl md:rounded-r-xl sticky inset-x-0 top-0 backdrop-blur-md bg-white/30 z-20"
 >
-  <div class="flex justify-between">
+  <div class="flex justify-between items-center">
     <h1 class="font-bold text-amber-500 text-2xl">
       <a routerLink="/">Shop</a>
     </h1>
 
+    @if(authService.currentUser) {
+    <div class="hidden md:flex flex-1 justify-center">
+      <search-component />
+    </div>
+    }
     <div class="flex items-center gap-2">
       @if(authService.currentUser){
 

@@ -184,3 +184,62 @@ export async function getAllProducts(req: Request, res: Response) {
     res.status(500).json({ success: false, msg: "Internal server error" });
   }
 }
+
+export async function searchProducts(req: Request, res: Response) {
+  try {
+    const { page, query } = req.query as { page: string; query: string };
+
+    const newPage = parseInt(page) || 1;
+    const searchQuery = query || "";
+
+    const offset = (newPage - 1) * ITEMS_PER_PAGE;
+
+    const products = await Product.find({
+      $or: [
+        {
+          name: {
+            $regex: searchQuery,
+            $options: "i",
+          },
+          description: {
+            $regex: searchQuery,
+            $options: "i",
+          },
+        },
+      ],
+    })
+      .skip(offset)
+      .limit(ITEMS_PER_PAGE)
+      .exec();
+
+    const totalDocuments = await Product.countDocuments({
+      $or: [
+        {
+          name: {
+            $regex: searchQuery,
+            $options: "i",
+          },
+          description: {
+            $regex: searchQuery,
+            $options: "i",
+          },
+        },
+      ],
+    });
+    const totalPages = Math.ceil(totalDocuments / ITEMS_PER_PAGE);
+
+    res.status(200).json({
+      success: true,
+      msg: `Successfully fetched all products with query ${searchQuery}`,
+      totalProducts: totalDocuments,
+      itemsPerPage: ITEMS_PER_PAGE,
+      currentPage: newPage,
+      itemsInCurrentPage: products.length,
+      totalPages,
+      products,
+    });
+  } catch (error: any) {
+    console.log("Error in getAllProducts: " + error);
+    res.status(500).json({ success: false, msg: "Internal server error" });
+  }
+}

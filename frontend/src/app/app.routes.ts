@@ -4,6 +4,7 @@ import { RegisterComponent } from './register/register.component';
 import { HomeComponent } from './home/home.component';
 import { authGuard } from './auth.guard';
 import { ProductComponent } from './product/product.component';
+import { SearchPageComponent } from './search-page/search-page.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -19,5 +20,9 @@ export const routes: Routes = [
   {
     path: 'product/:id',
     component: ProductComponent,
+  },
+  {
+    path: 'search',
+    component: SearchPageComponent,
   },
 ];
