@@ -4,9 +4,9 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && tsc --build && npm install --prefix frontend && ng build --prefix frontend",
+    "build": "npm install && tsc --build",
     "dev": "nodemon ./backend/server.ts",
-    "start": "NODE_ENV=production node ./dist/server.js"
+    "start": "node ./dist/server.js"
   },
   "keywords": [],
   "author": "",
@@ -24,6 +24,7 @@
     "bcryptjs": "^3.0.2",
     "cookie-parser": "^1.4.7",
     "cors": "^2.8.5",
+    "cross-env": "^7.0.3",
     "dotenv": "^16.5.0",
     "express": "^5.1.0",
     "jsonwebtoken": "^9.0.2",

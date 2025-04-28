@@ -4,7 +4,6 @@ import allRoutes from "./routes/index";
 import { connectDB } from "./db/connectDB";
 import cookieParser from "cookie-parser";
 import cors from "cors";
-import path from "path";
 
 configDotenv();
 
@@ -23,13 +22,13 @@ app.use("/api", allRoutes);
 
 const PORT = process.env.PORT;
 
-if (process.env.NODE_ENV === "production") {
-  app.use(express.static(path.join(__dirname, "/frontend/dist/frontend")));
+// if (process.env.NODE_ENV === "production") {
+//   app.use(express.static(path.join(__dirname, "/frontend/dist/frontend")));
 
-  app.get("*", (req, res) => {
-    res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-  });
-}
+//   app.get("*", (req, res) => {
+//     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
+//   });
+// }
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, msg: "Server is running" });

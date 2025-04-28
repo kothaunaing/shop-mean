@@ -6,6 +6,7 @@ const verifyToken_1 = require("../middlewares/verifyToken");
 const checkForAdmin_1 = require("../middlewares/checkForAdmin");
 const router = (0, express_1.Router)();
 router.get("/get-all", verifyToken_1.verifyToken, product_controller_1.getAllProducts);
+router.get("/search", verifyToken_1.verifyToken, product_controller_1.searchProducts);
 router.get("/get/:productId", verifyToken_1.verifyToken, product_controller_1.getAProduct);
 router.post("/new", verifyToken_1.verifyToken, checkForAdmin_1.checkForAdmin, product_controller_1.createNewProduct);
 router.delete("/delete/:productId", verifyToken_1.verifyToken, checkForAdmin_1.checkForAdmin, product_controller_1.deleteProduct);

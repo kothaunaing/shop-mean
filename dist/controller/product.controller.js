@@ -17,6 +17,7 @@ exports.deleteProduct = deleteProduct;
 exports.updateProduct = updateProduct;
 exports.getAProduct = getAProduct;
 exports.getAllProducts = getAllProducts;
+exports.searchProducts = searchProducts;
 const product_model_1 = __importDefault(require("../models/product.model"));
 const ITEMS_PER_PAGE = 10;
 function createNewProduct(req, res) {
@@ -158,6 +159,62 @@ function getAllProducts(req, res) {
             res.status(200).json({
                 success: true,
                 msg: "Successfully fetched all products",
+                totalProducts: totalDocuments,
+                itemsPerPage: ITEMS_PER_PAGE,
+                currentPage: newPage,
+                itemsInCurrentPage: products.length,
+                totalPages,
+                products,
+            });
+        }
+        catch (error) {
+            console.log("Error in getAllProducts: " + error);
+            res.status(500).json({ success: false, msg: "Internal server error" });
+        }
+    });
+}
+function searchProducts(req, res) {
+    return __awaiter(this, void 0, void 0, function* () {
+        try {
+            const { page, query } = req.query;
+            const newPage = parseInt(page) || 1;
+            const searchQuery = query || "";
+            const offset = (newPage - 1) * ITEMS_PER_PAGE;
+            const products = yield product_model_1.default.find({
+                $or: [
+                    {
+                        name: {
+                            $regex: searchQuery,
+                            $options: "i",
+                        },
+                        description: {
+                            $regex: searchQuery,
+                            $options: "i",
+                        },
+                    },
+                ],
+            })
+                .skip(offset)
+                .limit(ITEMS_PER_PAGE)
+                .exec();
+            const totalDocuments = yield product_model_1.default.countDocuments({
+                $or: [
+                    {
+                        name: {
+                            $regex: searchQuery,
+                            $options: "i",
+                        },
+                        description: {
+                            $regex: searchQuery,
+                            $options: "i",
+                        },
+                    },
+                ],
+            });
+            const totalPages = Math.ceil(totalDocuments / ITEMS_PER_PAGE);
+            res.status(200).json({
+                success: true,
+                msg: `Successfully fetched all products with query ${searchQuery}`,
                 totalProducts: totalDocuments,
                 itemsPerPage: ITEMS_PER_PAGE,
                 currentPage: newPage,
