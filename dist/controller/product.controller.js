@@ -151,6 +151,7 @@ function getAllProducts(req, res) {
             const newPage = parseInt(page) || 1;
             const offset = (newPage - 1) * ITEMS_PER_PAGE;
             const products = yield product_model_1.default.find({})
+                .sort({ createdAt: -1 })
                 .skip(offset)
                 .limit(ITEMS_PER_PAGE)
                 .exec();
@@ -194,6 +195,7 @@ function searchProducts(req, res) {
                     },
                 ],
             })
+                .sort({ createdAt: -1 })
                 .skip(offset)
                 .limit(ITEMS_PER_PAGE)
                 .exec();
