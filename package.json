@@ -7,7 +7,6 @@
     "build": "npm install && tsc --build && npm install --prefix frontend && npm run build --prefix frontend",
     "dev": "nodemon ./backend/server.ts",
     "start": "node ./dist/server.js"
- 
   },
   "keywords": [],
   "author": "",
