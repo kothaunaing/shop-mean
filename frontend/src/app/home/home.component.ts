@@ -1,5 +1,5 @@
 import { Component, effect } from '@angular/core';
-import { AuthServices } from '../../services/auth.services';
+import { AuthServices } from '../../services/auth.service';
 import { SingleProductComponent } from '../../components/SingleProduct/single-product.component';
 import { AddProductService } from '../../services/add-product.service';
 import { UpdateProductComponent } from '../../components/UpdateProduct/update-product.component';

@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Event, Router, RouterLink } from '@angular/router';
-import { AuthServices } from '../../services/auth.services';
+import { AuthServices } from '../../services/auth.service';
 import { LoginUserType } from '../../types/types';
 import { catchError, throwError } from 'rxjs';
 
@@ -49,6 +49,7 @@ export class LoginComponent {
       )
       .subscribe((res: any) => {
         this.authService.currentUser = res.user;
+        sessionStorage.setItem('token', res.token);
         this.loading.set(false);
         this.router.navigate(['/']);
       });

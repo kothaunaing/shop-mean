@@ -14,13 +14,15 @@ export const verifyToken = (
   res: Response,
   next: NextFunction
 ) => {
-  const token = req.cookies?.token;
+  const authHeader = req.headers.authorization;
 
   try {
-    if (!token) {
+    if (!authHeader || !authHeader.startsWith("Bearer")) {
       res.status(401).json({ success: false, msg: "Unauthorized - no token" });
       return;
     }
+
+    const token = authHeader.split(" ")[1];
 
     const decoded = verify(token, process.env.JWT_SECRET!) as JWtPayload;
 

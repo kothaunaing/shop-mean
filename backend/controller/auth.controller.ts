@@ -33,10 +33,11 @@ export async function loginController(req: Request, res: Response) {
       return;
     }
 
-    generateTokenAndSetCookie(user._id, res);
+    const token = generateTokenAndSetCookie(user._id, res);
 
     res.status(200).json({
       success: false,
+      token,
       msg: "Logged in successfully",
       user: {
         name: user.name,
@@ -92,10 +93,11 @@ export async function registerController(
     });
 
     await user.save();
-    generateTokenAndSetCookie(user._id, res);
+    const token = generateTokenAndSetCookie(user._id, res);
 
     res.status(201).json({
       success: true,
+      token,
       msg: "Registered successfully",
       user: {
         name,

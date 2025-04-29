@@ -1,6 +1,6 @@
 import { Component, effect, signal } from '@angular/core';
 import { RouterLink } from '@angular/router';
-import { AuthServices } from '../../services/auth.services';
+import { AuthServices } from '../../services/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddNewProductComponent } from '../AddNewProduct/add-new-product.component';
 import { AddProductService } from '../../services/add-product.service';

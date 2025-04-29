@@ -18,10 +18,14 @@ export class ProductComponent {
   constructor(private route: ActivatedRoute) {}
 
   async fetchAProduct() {
+    const token = sessionStorage.getItem('token');
     try {
       this.loadingProduct.set(true);
       const res: any = await axios.get(this.apiUrl + '/get/' + this.productId, {
         withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
       });
       this.product = res.data.product;
       console.log(res.data);

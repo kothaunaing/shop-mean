@@ -6,7 +6,7 @@ import {
   faPen,
   faTrash,
 } from '@fortawesome/free-solid-svg-icons';
-import { AuthServices } from '../../services/auth.services';
+import { AuthServices } from '../../services/auth.service';
 import { AddProductService } from '../../services/add-product.service';
 import { RouterLink } from '@angular/router';
 import { ProductServices } from '../../services/products.service';

@@ -5,7 +5,7 @@ import { ProductServices } from '../../services/products.service';
 import { SingleProductComponent } from '../../components/SingleProduct/single-product.component';
 import { PaginationComponent } from '../../components/Pagination/pagination.component';
 import { ActivatedRoute, RouterLink } from '@angular/router';
-import { AuthServices } from '../../services/auth.services';
+import { AuthServices } from '../../services/auth.service';
 import { SearchComponent } from '../../components/SearchComponent/search.component';
 
 @Component({

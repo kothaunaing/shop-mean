@@ -1,6 +1,6 @@
 import { Component, signal } from '@angular/core';
 import { Router, RouterLink } from '@angular/router';
-import { AuthServices } from '../../services/auth.services';
+import { AuthServices } from '../../services/auth.service';
 import { CreateUserType } from '../../types/types';
 import { catchError, of, throwError } from 'rxjs';
 
@@ -63,6 +63,7 @@ export class RegisterComponent {
       )
       .subscribe((res: any) => {
         this.authService.currentUser = res.user;
+        sessionStorage.setItem('token', res.token);
         this.loading.set(false);
         this.router.navigate(['/']);
       });

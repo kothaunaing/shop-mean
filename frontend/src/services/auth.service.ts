@@ -33,14 +33,21 @@ export class AuthServices {
       .subscribe((res) => {
         console.log('Logged out successfully');
       });
-    this.router.navigate(['/login']);
+    sessionStorage.removeItem('token');
     this.currentUser = null;
+    this.router.navigate(['/login']);
   }
 
   checkAuth() {
     this.checkingAuth.set(true);
+    const token = sessionStorage.getItem('token');
     this.http
-      .get(this.apiUrl + '/check-auth', { withCredentials: true })
+      .get(this.apiUrl + '/check-auth', {
+        withCredentials: true,
+        headers: {
+          Authorization: `Bearer ${token}`,
+        },
+      })
       .pipe(
         catchError((error: any) => {
           this.checkingAuth.set(false);
