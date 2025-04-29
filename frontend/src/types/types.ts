@@ -26,3 +26,23 @@ export interface ProductDataType {
   description?: string;
   image: string;
 }
+
+export interface SingleCartItem {
+  _id: string;
+  cart: string;
+  createdAt: string;
+  product: ProductDataType;
+  quantity: number;
+  updatedAt: string;
+}
+
+export interface CartItemsResponseType {
+  cartItems: SingleCartItem[];
+  items: number;
+  totalItems: number;
+  itemsPerPage: 10;
+  msg: string;
+  page: number;
+  success: boolean;
+  totalPages: number;
+}

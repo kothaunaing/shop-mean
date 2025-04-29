@@ -95,7 +95,7 @@ let RegisterComponent = (() => {
                 return (0, rxjs_1.throwError)(() => new Error('Something went wrong'));
             }))
                 .subscribe((res) => {
-                this.authService.currentUser = res.user;
+                this.authService.currentUser() = res.user;
                 this.loading.set(false);
                 this.router.navigate(['/']);
             });

@@ -48,7 +48,7 @@ export class LoginComponent {
         })
       )
       .subscribe((res: any) => {
-        this.authService.currentUser = res.user;
+        this.authService.currentUser.set(res.user);
         sessionStorage.setItem('token', res.token);
         this.loading.set(false);
         this.router.navigate(['/']);

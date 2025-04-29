@@ -9,7 +9,8 @@ import { Router } from '@angular/router';
 })
 export class AuthServices {
   checkingAuth = signal(true);
-  currentUser: CurrentUserType | null = null;
+  currentUser = signal<CurrentUserType | null>(null);
+
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5000/api/auth';
 
@@ -34,7 +35,7 @@ export class AuthServices {
         console.log('Logged out successfully');
       });
     sessionStorage.removeItem('token');
-    this.currentUser = null;
+    this.currentUser.set(null);
     this.router.navigate(['/login']);
   }
 
@@ -57,7 +58,8 @@ export class AuthServices {
       )
       .subscribe((res: any) => {
         this.checkingAuth.set(false);
-        this.currentUser = res.user;
+
+        this.currentUser.set(res.user);
       });
   }
 }

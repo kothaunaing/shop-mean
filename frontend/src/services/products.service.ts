@@ -59,7 +59,7 @@ export class ProductServices {
         },
       });
       this.productsData = res.data;
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error: any) {
       console.log('Error in fetchAllProducts: ' + error.message);
     } finally {
@@ -119,7 +119,9 @@ export class ProductServices {
 
     const updatedProduct = res.data.product;
 
-    const newProducts = this.productsData?.products.map((product) => {
+    console.log(data);
+
+    const newProducts = this.productsData?.products?.map((product) => {
       if (product._id === data._id) {
         return updatedProduct;
       }

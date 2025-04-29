@@ -1,15 +1,21 @@
-import { Component, effect, signal } from '@angular/core';
-import { RouterLink } from '@angular/router';
+import { Component, effect, inject, signal } from '@angular/core';
+import { RouterLink, RouterLinkActive } from '@angular/router';
 import { AuthServices } from '../../services/auth.service';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { AddNewProductComponent } from '../AddNewProduct/add-new-product.component';
 import { AddProductService } from '../../services/add-product.service';
-import { faAdd, faSearch } from '@fortawesome/free-solid-svg-icons';
+import {
+  faAdd,
+  faCartShopping,
+  faSearch,
+} from '@fortawesome/free-solid-svg-icons';
 import { SearchComponent } from '../SearchComponent/search.component';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   imports: [
     RouterLink,
+    RouterLinkActive,
     FontAwesomeModule,
     AddNewProductComponent,
     SearchComponent,
@@ -19,9 +25,11 @@ import { SearchComponent } from '../SearchComponent/search.component';
 })
 export class HeaderComponent {
   accountDetailsShown = signal(false);
+  cartService = inject(CartService);
 
   faAdd = faAdd;
   faSearch = faSearch;
+  faCartShopping = faCartShopping;
 
   confirmLogout = signal(false);
   constructor(

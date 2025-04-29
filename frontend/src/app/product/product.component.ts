@@ -1,7 +1,8 @@
-import { Component, signal } from '@angular/core';
+import { Component, inject, signal } from '@angular/core';
 import { ActivatedRoute } from '@angular/router';
 import { ProductDataType } from '../../types/types';
 import axios from 'axios';
+import { CartService } from '../../services/cart.service';
 
 @Component({
   selector: 'app-product',
@@ -14,6 +15,7 @@ export class ProductComponent {
   productId: string | null = null;
   product: ProductDataType | null = null;
   loadingProduct = signal(false);
+  cartService = inject(CartService);
 
   constructor(private route: ActivatedRoute) {}
 
@@ -28,7 +30,7 @@ export class ProductComponent {
         },
       });
       this.product = res.data.product;
-      console.log(res.data);
+      // console.log(res.data);
     } catch (error: any) {
       console.log('Error in fetchAlProduct: ' + error.message);
     } finally {

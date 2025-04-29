@@ -34,18 +34,31 @@
       <a routerLink="/">Shop</a>
     </h1>
 
-    @if(authService.currentUser) {
+    @if(authService.currentUser()) {
     <div class="hidden md:flex flex-1 justify-center">
       <search-component />
     </div>
     }
     <div class="flex items-center gap-2">
-      @if(authService.currentUser){
+      @if(authService.currentUser()){
+      <div class="border-r-[2px] border-r-amber-600">
+        <a
+          routerLink="/cart"
+          routerLinkActive="shadow-md"
+          class="hover:shadow-md rounded-full cursor-pointer p-2 flex items-center justify-center gap-1 mr-2"
+        >
+          <span
+            class="bottom-[28px] p-1 px-4 text-white bg-amber-500 rounded-2xl shadow-md shadow-amber-100"
+            >{{ cartService.cartItemsCount || 0 }}</span
+          >
 
+          <fa-icon [icon]="faCartShopping" />
+        </a>
+      </div>
       <div
         class="border rounded-2xl border-amber-600 px-2 flex items-center gap-2 py-1"
       >
-        @if(authService.currentUser.role === "admin"){
+        @if(authService.currentUser()?.role === "admin"){
         <button
           (click)="addProductService.openNewProductForm()"
           class="text-lg hover:shadow-md size-10 rounded-full cursor-pointer hover:opacity-60 font-semibold"
@@ -54,7 +67,7 @@
         </button>
         }
         <p class="font-semibold text">
-          {{ authService.currentUser.role?.toUpperCase() }}
+          {{ authService.currentUser()?.role?.toUpperCase() }}
         </p>
       </div>
       }
@@ -71,15 +84,15 @@
         <div
           class="absolute top-full p-4 bg-white shadow-xl rounded-xl right-0 z-20 min-w-[150px]"
         >
-          @if (authService.currentUser){
+          @if (authService.currentUser()){
           <p class="font-semibold">
-            {{ authService.currentUser.name }}
+            {{ authService.currentUser()?.name }}
           </p>
           <p class="text-gray-600 text-sm">
-            {{ "@" + authService.currentUser.username }}
+            {{ "@" + authService.currentUser()?.username }}
           </p>
           <p class="text-gray-600 text-sm">
-            {{ authService.currentUser.email }}
+            {{ authService.currentUser()?.email }}
           </p>
           <button
             (click)="openConfirm()"

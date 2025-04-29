@@ -21,6 +21,7 @@ const productSchema = new Schema(
       type: String,
       required: true,
     },
+    stockQuantity: Number,
   },
   { timestamps: true }
 );

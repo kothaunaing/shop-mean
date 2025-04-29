@@ -39,11 +39,30 @@
       <div>
         <div class="font-semibold mt-2 flex justify-between">
           <p>{{ product.name }}</p>
-          <button
-            class="p-2 bg-amber-500 rounded-2xl hover:opacity-60 cursor-pointer w-[100px]"
-          >
-            Buy
-          </button>
+          <div class="flex items-center gap-2">
+            <select
+              #items
+              class="bg-amber-200 p-2 px-4 rounded-2xl outline-amber-600"
+            >
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+            <button
+              [disabled]="cartService.addingToCart()"
+              (click)="cartService.addToCart(product._id!, items.value)"
+              class="p-2 bg-amber-500 rounded-2xl hover:opacity-60 cursor-pointer w-[150px]"
+            >
+              {{ cartService.addingToCart() ? "Adding..." : "Add to Cart" }}
+            </button>
+          </div>
         </div>
         <div class="text-sm text-gray-600 mt-2">{{ product.description }}</div>
       </div>

@@ -1,0 +1,86 @@
+<main class="max-w-5xl mx-auto">
+  @if(cartService.loadingCartItems()){
+  <div class="flex justify-center items-center h-[100px]">
+    <p>Loading...</p>
+  </div>
+
+  } @else { @if (cartService.cartItems){
+  <div class="m-2 md:flex md:gap-4 md:items-start">
+    @if(authService.currentUser()){
+    <div
+      class="border shadow-md border-amber-500 rounded-2xl p-4 mt-8 min-w-[300px]"
+    >
+      <div class="font-semibold text-xl">
+        Total items: {{ cartService.cartItemsCount }}
+      </div>
+      <!-- <div class="font-semibold text-xl">Total: $8594</div> -->
+    </div>
+    <div class="flex-1">
+      <h2 class="text-2xl font-bold text-amber-500 mt-4 mb-4">Your Cart</h2>
+      <div class="space-y-4">
+        @for(item of cartService.cartItems.cartItems; track item._id){
+
+        <div class="shadow-md rounded-2xl p-3 flex">
+          <a [routerLink]="`/product/${item.product._id}`">
+            <div class="border-r pr-2 border-r-slate-300 w-[100px]">
+              <img [src]="item.product.image" class="w-full" />
+            </div>
+          </a>
+          <div class="ml-2 flex-1">
+            <p class="font-semibold">{{ item.product.name }}</p>
+
+            <see-more-component [text]="item.product.description!" />
+            <div class="top-1 left-1 font-bold rounded-md">
+              @if (item.product.discount){
+              <p>
+                <span class="line-through">
+                  {{ "$" + item.product.price.toFixed(2) }}
+                </span>
+                ({{ " " + item.product.discount }}% OFF)
+              </p>
+              <p>
+                {{
+                  "$" +
+                    (
+                      item.product.price -
+                      item.product.price * (item.product.discount / 100)
+                    ).toFixed(2)
+                }}
+              </p>
+
+              } @else {
+              {{ "$" + item.product.price }}
+              }
+            </div>
+            <div class="text-xl">
+              {{ item.quantity }} {{ item.quantity <= 1 ? "item" : "items" }}
+            </div>
+          </div>
+        </div>
+
+        }
+      </div>
+
+      <app-pagination
+        navigationPath="/cart"
+        [currentPage]="page"
+        [totalPages]="cartService.cartItems.totalPages"
+      />
+    </div>
+
+    } @else {
+    <div
+      class="text-amber-600 font-semibold h-[200px] flex items-center justify-center"
+    >
+      <div>
+        <p>
+          You have to login first. Go to
+          <a class="underline font-bold" routerLink="/login">Login</a> page
+        </p>
+      </div>
+    </div>
+    }
+  </div>
+
+  } }
+</main>
