@@ -4,10 +4,12 @@ import allRoutes from "./routes/index";
 import { connectDB } from "./db/connectDB";
 import cookieParser from "cookie-parser";
 import cors from "cors";
+import path from "path";
 
 configDotenv();
 
 const app = express();
+const PORT = process.env.PORT;
 
 app.use(
   cors({
@@ -19,28 +21,21 @@ app.use(
 app.use(express.json());
 app.use(cookieParser());
 app.use("/api", allRoutes);
+app.use(
+  express.static(path.join(__dirname, "../frontend/dist/frontend/browser"))
+);
 
-const PORT = process.env.PORT;
-
-// if (process.env.NODE_ENV === "production") {
-//   app.use(express.static(path.join(__dirname, "/frontend/dist/frontend")));
-
-//   app.get("*", (req, res) => {
-//     res.sendFile(path.join(__dirname, "frontend", "dist", "index.html"));
-//   });
-// }
+if (process.env.NODE_ENV === "production") {
+  app.get("*", (req, res) => {
+    res.sendFile(
+      path.join(__dirname, "../frontend/dist/frontend/broswer/index.html")
+    );
+  });
+}
 
 app.get("/", (req, res) => {
   res.status(200).json({ success: true, msg: "Server is running" });
 });
-
-// const frontendPath = path.join(__dirname, "../frontend/dist/frontend");
-
-// app.use(express.static(frontendPath));
-
-// app.get("*", (req, res) => {
-//   res.sendFile(path.join(frontendPath, "index.html"));
-// });
 
 app.listen(PORT, () => {
   connectDB();

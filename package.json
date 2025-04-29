@@ -4,10 +4,10 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "build": "npm install && tsc --build",
+    "build": "npm install && tsc --build && cd frontend && npm install",
     "dev": "nodemon ./backend/server.ts",
-    "start": "node ./dist/server.js",
-    "build:frontend": "cd frontend && npm install && ng build"
+    "start": "node ./dist/server.js"
+ 
   },
   "keywords": [],
   "author": "",

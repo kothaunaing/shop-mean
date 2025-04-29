@@ -162,6 +162,7 @@ export async function getAllProducts(req: Request, res: Response) {
     const offset = (newPage - 1) * ITEMS_PER_PAGE;
 
     const products = await Product.find({})
+      .sort({ createdAt: -1 })
       .skip(offset)
       .limit(ITEMS_PER_PAGE)
       .exec();
@@ -208,6 +209,7 @@ export async function searchProducts(req: Request, res: Response) {
         },
       ],
     })
+      .sort({ createdAt: -1 })
       .skip(offset)
       .limit(ITEMS_PER_PAGE)
       .exec();
