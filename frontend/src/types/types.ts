@@ -34,6 +34,7 @@ export interface SingleCartItem {
   product: ProductDataType;
   quantity: number;
   updatedAt: string;
+  deliveryOption: number;
 }
 
 export interface CartItemsResponseType {

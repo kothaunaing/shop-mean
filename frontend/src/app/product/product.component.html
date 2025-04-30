@@ -5,12 +5,9 @@
   </div>
   } @else if(product) {
   <div class="m-2">
-    <div class="group rounded-2xl p-4 shadow-xl">
-      <div class="relative overflow-hidden rounded-md">
-        <img
-          class="scale-100 transition-transform duration-200"
-          [src]="product.image"
-        />
+    <div class="group rounded-2xl p-4 shadow-xl flex gap-4">
+      <div class="relative overflow-hidden rounded-md w-[150px]">
+        <img class="transition-transform duration-200" [src]="product.image" />
         <div
           class="absolute top-1 left-1 p-2 bg-gray-600/70 font-bold rounded-md text-white"
         >
@@ -36,10 +33,13 @@
           }
         </div>
       </div>
-      <div>
-        <div class="font-semibold mt-2 flex justify-between">
+      <div class="flex-1">
+        <div class="font-semibold mt-2 justify-between">
           <p>{{ product.name }}</p>
-          <div class="flex items-center gap-2">
+          <div class="text-sm text-gray-600 mt-2">
+            {{ product.description }}
+          </div>
+          <div class="flex items-center gap-2 mt-4">
             <select
               #items
               class="bg-amber-200 p-2 px-4 rounded-2xl outline-amber-600"
@@ -64,7 +64,6 @@
             </button>
           </div>
         </div>
-        <div class="text-sm text-gray-600 mt-2">{{ product.description }}</div>
       </div>
     </div>
   </div>

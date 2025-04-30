@@ -1,6 +1,7 @@
 import { Injectable, signal } from '@angular/core';
 import { ProductDataType } from '../types/types';
 import axios from 'axios';
+import { getTokenAndReturnHeader } from '../utils/getTokenAndReturnHeader';
 
 interface ProductsData {
   currentPage: number;
@@ -23,7 +24,6 @@ export class ProductServices {
   query: string = '';
 
   async searchProducts(page: number = 1, query: string = '') {
-    const token = sessionStorage.getItem('token');
     try {
       const searchQuery = `?query=${query}`;
       const pageQuery = `&page=${page}`;
@@ -33,9 +33,7 @@ export class ProductServices {
         this.apiUrl + '/search' + searchQuery + pageQuery,
         {
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: getTokenAndReturnHeader('token'),
         }
       );
       this.productsData = res.data;
@@ -48,15 +46,12 @@ export class ProductServices {
   }
 
   async fetchAllProducts(page: number = 2) {
-    const token = sessionStorage.getItem('token');
     try {
       const pageQuery = `?page=${page}`;
       this.loadingProducts.set(true);
       const res: any = await axios.get(this.apiUrl + '/get-all' + pageQuery, {
         withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getTokenAndReturnHeader('token'),
       });
       this.productsData = res.data;
       // console.log(res.data);
@@ -68,15 +63,12 @@ export class ProductServices {
   }
 
   async deleteProduct(productId: string) {
-    const token = sessionStorage.getItem('token');
     try {
       const res: any = await axios.delete(
         this.apiUrl + '/delete/' + productId,
         {
           withCredentials: true,
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
+          headers: getTokenAndReturnHeader('key'),
         }
       );
       const newProducts = this.productsData?.products?.filter(
@@ -89,13 +81,10 @@ export class ProductServices {
   }
 
   async addProduct(data: any) {
-    const token = sessionStorage.getItem('token');
     try {
       const res: any = await axios.post(this.apiUrl + '/new/', data, {
         withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getTokenAndReturnHeader('token'),
       });
 
       this.productsData!.products.push(res.data.product);
@@ -111,19 +100,17 @@ export class ProductServices {
       data,
       {
         withCredentials: true,
-        headers: {
-          Authorization: `Bearer ${token}`,
-        },
+        headers: getTokenAndReturnHeader('key'),
       }
     );
 
     const updatedProduct = res.data.product;
 
-    console.log(data);
-
     const newProducts = this.productsData?.products?.map((product) => {
       if (product._id === data._id) {
         return updatedProduct;
+      } else {
+        return product;
       }
     }) as ProductDataType[];
 

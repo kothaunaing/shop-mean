@@ -42,6 +42,7 @@ export class CartService {
       );
 
       this.cartItems = res.data;
+      console.log(res.data);
     } catch (error: any) {
       console.log('Error in getCartItems: ' + error.message);
     } finally {

@@ -22,6 +22,10 @@ const productSchema = new Schema(
       required: true,
     },
     stockQuantity: Number,
+    keywords: {
+      type: [String],
+      default: [],
+    },
   },
   { timestamps: true }
 );
