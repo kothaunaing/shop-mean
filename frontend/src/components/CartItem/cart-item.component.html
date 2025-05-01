@@ -41,6 +41,7 @@
           <div class="text-lg">
             Quantity:
             <input
+              #quantity
               class="w-[50px]"
               min="1"
               [value]="item.quantity"
@@ -49,7 +50,8 @@
           </div>
 
           <button
-            (click)="closeUpdateQuantity()"
+            [disabled]="updatingQuantity()"
+            (click)="updateQuantity(item._id, quantity.value, item.quantity)"
             class="hover:underline text-blue-600 cursor-pointer"
           >
             Save</button
@@ -63,6 +65,7 @@
           </button>
           }
           <button
+            (click)="cartService.deleteCartItem(item)"
             class="hover:underline text-blue-600 cursor-pointer hover:text-red-600"
           >
             Delete

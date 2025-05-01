@@ -176,3 +176,27 @@ export async function deleteAllCartItems(req: CustomRequest, res: Response) {
     res.status(500).json({ success: false, msg: "Internal server error" });
   }
 }
+
+export async function updateQuantity(req: CustomRequest, res: Response) {
+  try {
+    const { id } = req.params;
+    const { newQuantity } = req.body;
+
+    const cartItem = await CartItem.findByIdAndUpdate(
+      id,
+      { quantity: newQuantity },
+      { new: true }
+    ).populate("product");
+
+    if (!cartItem) {
+      res.status(400).json({ success: false, msg: "No item found" });
+      return;
+    }
+
+    res
+      .status(200)
+      .json({ success: true, msg: "Cart qauntity is updated", cartItem });
+  } catch (error: any) {
+    console.log("Error in updateQuantity: " + error.message);
+  }
+}

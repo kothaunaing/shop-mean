@@ -87,13 +87,13 @@ export async function updateProduct(req: CustomRequest, res: Response) {
     const { name, description, price, discount, image } = req.body as Product;
     const { productId } = req.params as { productId: string };
 
-    if (!name.trim() || !price.trim() || !image.trim()) {
-      res
-        .status(400)
-        .json({ success: false, msg: "Please fill all required fields" });
+    // if (!name?.trim() || !price?.trim() || !image?.trim()) {
+    //   res
+    //     .status(400)
+    //     .json({ success: false, msg: "Please fill all required fields" });
 
-      return;
-    }
+    //   return;
+    // }
 
     const priceInt = parseInt(price.trim());
     const discountInt = parseInt(discount?.trim()!);
@@ -113,7 +113,7 @@ export async function updateProduct(req: CustomRequest, res: Response) {
     const updatedProduct = await Product.findByIdAndUpdate(
       productId,
       {
-        name: name.trim(),
+        name: name?.trim(),
         description: description?.trim(),
         price: priceInt,
         discount: discountInt | 0,

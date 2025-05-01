@@ -68,7 +68,7 @@ export class ProductServices {
         this.apiUrl + '/delete/' + productId,
         {
           withCredentials: true,
-          headers: getTokenAndReturnHeader('key'),
+          headers: getTokenAndReturnHeader('token'),
         }
       );
       const newProducts = this.productsData?.products?.filter(
@@ -87,20 +87,19 @@ export class ProductServices {
         headers: getTokenAndReturnHeader('token'),
       });
 
-      this.productsData!.products.push(res.data.product);
+      this.productsData!.products.unshift(res.data.product);
     } catch (error: any) {
       console.log('Error in addProduct: ' + error.message);
     }
   }
 
   async updateProduct(data: any) {
-    const token = sessionStorage.getItem('token');
     const res: any = await axios.put(
       this.apiUrl + '/update/' + data._id,
       data,
       {
         withCredentials: true,
-        headers: getTokenAndReturnHeader('key'),
+        headers: getTokenAndReturnHeader('token'),
       }
     );
 
