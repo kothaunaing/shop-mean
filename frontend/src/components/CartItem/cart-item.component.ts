@@ -22,7 +22,7 @@ export class CartItemComponent {
   }
 
   changeSelectedOption(id: number) {
-    this.selectedOption = id;
+    this.item.deliveryOption = id;
   }
 
   date(timestamp: number) {
@@ -38,6 +38,10 @@ export class CartItemComponent {
   }
 
   async updateQuantity(id: string, quantity: string, originalQuantity: number) {
+    if (parseInt(quantity) === originalQuantity) {
+      this.closeUpdateQuantity();
+      return;
+    }
     try {
       this.updatingQuantity.set(true);
 

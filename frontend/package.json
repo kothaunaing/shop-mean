@@ -28,6 +28,7 @@
     "postcss": "^8.5.3",
     "rxjs": "~7.8.0",
     "shop_mean": "file:..",
+    "socket.io-client": "^4.8.1",
     "tailwindcss": "^4.1.4",
     "tslib": "^2.3.0",
     "zone.js": "~0.15.0"

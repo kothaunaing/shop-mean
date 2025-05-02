@@ -21,6 +21,11 @@ const productSchema = new mongoose_1.Schema({
         type: String,
         required: true,
     },
+    stockQuantity: Number,
+    keywords: {
+        type: [String],
+        default: [],
+    },
 }, { timestamps: true });
 const Product = (0, mongoose_1.model)("Product", productSchema);
 exports.default = Product;

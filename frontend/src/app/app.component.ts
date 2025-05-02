@@ -3,6 +3,7 @@ import { RouterOutlet } from '@angular/router';
 import { AuthServices } from '../services/auth.service';
 import { HeaderComponent } from '../components/Header/header.component';
 import { CartService } from '../services/cart.service';
+import { SocketService } from '../services/socket.service';
 
 @Component({
   selector: 'app-root',
@@ -13,20 +14,22 @@ import { CartService } from '../services/cart.service';
 export class AppComponent {
   title = 'frontend';
   cartService = inject(CartService);
+  socketService = inject(SocketService);
 
   constructor(public authService: AuthServices) {
     effect(() => {
       if (this.authService.currentUser()) {
+        this.socketService.connectUser(this.authService.currentUser()?._id!);
         this.fetchCartItemsCount();
-        console.log('change');
+      } else {
+        this.cartService.cartItemsCount = 0;
       }
     });
   }
 
   ngOnInit() {
     this.authService.checkAuth();
-
-    this.fetchCartItemsCount();
+    // this.fetchCartItemsCount();
   }
 
   fetchCartItemsCount() {

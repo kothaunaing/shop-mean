@@ -39,11 +39,13 @@ function loginController(req, res) {
                 res.status(400).json({ success: false, msg: "Invalid credentials" });
                 return;
             }
-            (0, generateTokenAndSetCookie_1.generateTokenAndSetCookie)(user._id, res);
+            const token = (0, generateTokenAndSetCookie_1.generateTokenAndSetCookie)(user._id, res);
             res.status(200).json({
                 success: false,
+                token,
                 msg: "Logged in successfully",
                 user: {
+                    _id: user._id,
                     name: user.name,
                     username: user.username,
                     password: undefined,
@@ -85,11 +87,13 @@ function registerController(req, res) {
                 verificationCode,
             });
             yield user.save();
-            (0, generateTokenAndSetCookie_1.generateTokenAndSetCookie)(user._id, res);
+            const token = (0, generateTokenAndSetCookie_1.generateTokenAndSetCookie)(user._id, res);
             res.status(201).json({
                 success: true,
+                token,
                 msg: "Registered successfully",
                 user: {
+                    _id: user._id,
                     name,
                     username: user.username,
                     email: user.email,
@@ -116,6 +120,7 @@ function checkAuth(req, res) {
         res.status(200).json({
             success: true,
             user: {
+                _id: user._id,
                 name: user.name,
                 username: user.username,
                 email: user.email,

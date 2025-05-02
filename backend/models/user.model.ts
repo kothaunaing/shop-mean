@@ -29,6 +29,12 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
+    socketId: String,
+    isOnline: {
+      type: Boolean,
+      default: false,
+    },
+    lastOnline: { type: Number },
     verificationCode: String,
     verificationCodeExpiresAt: String,
   },

@@ -40,6 +40,7 @@ export async function loginController(req: Request, res: Response) {
       token,
       msg: "Logged in successfully",
       user: {
+        _id: user._id,
         name: user.name,
         username: user.username,
         password: undefined,
@@ -100,6 +101,7 @@ export async function registerController(
       token,
       msg: "Registered successfully",
       user: {
+        _id: user._id,
         name,
         username: user.username,
         email: user.email,
@@ -126,6 +128,7 @@ export async function checkAuth(req: CustomRequest, res: Response) {
   res.status(200).json({
     success: true,
     user: {
+      _id: user._id,
       name: user.name,
       username: user.username,
       email: user.email,

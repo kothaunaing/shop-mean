@@ -1,9 +1,11 @@
 export interface CreateUserType {
+  _id?: string;
   name: string;
   username: string;
   email: string;
   password: string;
   role?: string;
+  isOnline?: boolean;
 }
 
 export interface LoginUserType {
@@ -41,9 +43,26 @@ export interface CartItemsResponseType {
   cartItems: SingleCartItem[];
   items: number;
   totalItems: number;
-  itemsPerPage: 10;
+  itemsPerPage: number;
   msg: string;
   page: number;
   success: boolean;
   totalPages: number;
+}
+
+export interface AllUserResponseType {
+  users: CreateUserType[];
+  items: number;
+  totalUsers: number;
+  itemsPerPage: number;
+  msg: string;
+  page: number;
+  success: boolean;
+  totalPages: number;
+}
+
+export interface OnlineUserType {
+  isOnline: boolean;
+  userId: string;
+  lastOnline: string;
 }

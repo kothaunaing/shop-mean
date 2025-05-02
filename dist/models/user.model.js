@@ -29,6 +29,11 @@ const userSchema = new mongoose_1.Schema({
         type: Boolean,
         default: false,
     },
+    socketId: String,
+    isOnline: {
+        type: Boolean,
+        default: false,
+    },
     verificationCode: String,
     verificationCodeExpiresAt: String,
 }, { timestamps: true });

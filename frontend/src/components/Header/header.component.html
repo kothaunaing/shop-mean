@@ -1,5 +1,5 @@
 @if(confirmLogout()){
-<div class="fixed z-30 inset-0 flex items-center justify-center bg-black/20">
+<div class="fixed z-40 inset-0 flex items-center justify-center bg-black/20">
   <div
     class="m-2 flex flex-col items-center justify-center shadow-md p-4 rounded-xl border border-slate-200 bg-white"
   >
@@ -27,7 +27,7 @@
 }
 
 <header
-  class="container mx-auto p-3 m-2 border-b border-b-amber-200 shadow-xl md:rounded-l-xl md:rounded-r-xl sticky inset-x-0 top-0 backdrop-blur-md bg-white/30 z-20"
+  class="container mx-auto p-3 m-2 border-b border-b-amber-200 shadow-xl md:rounded-l-xl md:rounded-r-xl sticky inset-x-0 top-0 backdrop-blur-md bg-white/30 z-30"
 >
   <div class="flex justify-between items-center">
     <h1 class="font-bold text-amber-500 text-2xl">
@@ -82,7 +82,7 @@
         @if (accountDetailsShown()){
 
         <div
-          class="absolute top-full p-4 bg-white shadow-xl rounded-xl right-0 z-20 min-w-[150px]"
+          class="absolute top-full p-4 bg-white shadow-xl rounded-xl right-0 z-30 min-w-[150px]"
         >
           @if (authService.currentUser()){
           <p class="font-semibold">

@@ -3,18 +3,20 @@ import { inject, Injectable, signal } from '@angular/core';
 import { CreateUserType, CurrentUserType, LoginUserType } from '../types/types';
 import { catchError, throwError } from 'rxjs';
 import { Router } from '@angular/router';
+import { SocketService } from './socket.service';
 
 @Injectable({
   providedIn: 'root',
 })
 export class AuthServices {
   checkingAuth = signal(true);
+
   currentUser = signal<CurrentUserType | null>(null);
 
   private http = inject(HttpClient);
   private apiUrl = 'http://localhost:5000/api/auth';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private socketService: SocketService) {}
 
   register(data: CreateUserType) {
     return this.http.post(this.apiUrl + '/register', data, {
@@ -33,10 +35,11 @@ export class AuthServices {
       .get(this.apiUrl + '/logout', { withCredentials: true })
       .subscribe((res) => {
         console.log('Logged out successfully');
+        this.socketService.disconnectUser(this.currentUser()?._id!);
+        sessionStorage.removeItem('token');
+        this.currentUser.set(null);
+        this.router.navigate(['/login']);
       });
-    sessionStorage.removeItem('token');
-    this.currentUser.set(null);
-    this.router.navigate(['/login']);
   }
 
   checkAuth() {

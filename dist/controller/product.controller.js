@@ -88,12 +88,12 @@ function updateProduct(req, res) {
         try {
             const { name, description, price, discount, image } = req.body;
             const { productId } = req.params;
-            if (!name.trim() || !price.trim() || !image.trim()) {
-                res
-                    .status(400)
-                    .json({ success: false, msg: "Please fill all required fields" });
-                return;
-            }
+            // if (!name?.trim() || !price?.trim() || !image?.trim()) {
+            //   res
+            //     .status(400)
+            //     .json({ success: false, msg: "Please fill all required fields" });
+            //   return;
+            // }
             const priceInt = parseInt(price.trim());
             const discountInt = parseInt(discount === null || discount === void 0 ? void 0 : discount.trim());
             if (isNaN(priceInt)) {
@@ -107,7 +107,7 @@ function updateProduct(req, res) {
                 return;
             }
             const updatedProduct = yield product_model_1.default.findByIdAndUpdate(productId, {
-                name: name.trim(),
+                name: name === null || name === void 0 ? void 0 : name.trim(),
                 description: description === null || description === void 0 ? void 0 : description.trim(),
                 price: priceInt,
                 discount: discountInt | 0,

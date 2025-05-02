@@ -6,6 +6,7 @@ import { HomeComponent } from './home/home.component';
 import { ProductComponent } from './product/product.component';
 import { SearchPageComponent } from './search-page/search-page.component';
 import { CartComponent } from './cart/cart.component';
+import { ChatComponent } from './chat/chat.component';
 
 export const routes: Routes = [
   { path: '', component: HomeComponent },
@@ -29,5 +30,9 @@ export const routes: Routes = [
   {
     path: 'cart',
     component: CartComponent,
+  },
+  {
+    path: 'chat',
+    component: ChatComponent,
   },
 ];
