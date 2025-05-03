@@ -18,3 +18,5 @@ export const shippingTypes = [
     price: 999,
   },
 ];
+
+export const baseApiUrl = 'http://localhost:5000/api';

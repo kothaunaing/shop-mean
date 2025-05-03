@@ -10,10 +10,11 @@ import { ChatService } from '../../services/chat.service';
 import { CreateUserType, OnlineUserType } from '../../types/types';
 import { AuthServices } from '../../services/auth.service';
 import { SocketService } from '../../services/socket.service';
+import { MessagesComponent } from '../../components/Messages/messages.component';
 
 @Component({
   selector: 'app-chat',
-  imports: [FontAwesomeModule, RouterLink],
+  imports: [FontAwesomeModule, RouterLink, MessagesComponent],
   templateUrl: './chat.component.html',
   styleUrl: './chat.component.css',
 })
@@ -21,7 +22,6 @@ export class ChatComponent {
   faArrowLeft = faArrowLeft;
   faPaperPlane = faPaperPlane;
   faClose = faClose;
-  userToChat!: CreateUserType;
 
   constructor(
     public chatService: ChatService,
@@ -37,26 +37,29 @@ export class ChatComponent {
   }
 
   handleOnlineUser() {
-    const onlineUser: OnlineUserType =
-      this.socketService.onOnlineUsersChange()!;
+    this.socketService.onOnlineUsersChange().subscribe((onlineUser) => {
+      const exists = this.chatService.onlineUsers.some(
+        (user) => user.userId === onlineUser.userId
+      );
 
-    const exists = this.chatService.onlineUsers.some(
-      (user) => user.userId === onlineUser.userId
-    );
-
-    if (exists) {
-      const newUsers = this.chatService.onlineUsers.map((user) => {
-        return onlineUser.userId === user.userId ? onlineUser : user;
-      });
-      this.chatService.onlineUsers = newUsers;
-    } else {
-      this.chatService.onlineUsers.push(onlineUser);
-      console.log(onlineUser);
-    }
+      if (exists) {
+        const newUsers = this.chatService.onlineUsers.map((user) => {
+          return onlineUser.userId === user.userId ? onlineUser : user;
+        });
+        this.chatService.onlineUsers = newUsers;
+      } else {
+        this.chatService.onlineUsers.push(onlineUser);
+        console.log(onlineUser);
+      }
+    });
   }
 
   setUserToChat(user: CreateUserType) {
-    this.userToChat = user;
+    this.chatService.userToChat = user;
+  }
+
+  getNumberOnlineUsers() {
+    return this.chatService.onlineUsers.filter((user) => user.isOnline).length;
   }
 
   isUserOnline(userId: string) {

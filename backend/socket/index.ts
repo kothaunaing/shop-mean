@@ -1,7 +1,8 @@
 import { Server, Socket } from "socket.io";
 import { userSocketHandler } from "./user.socket";
+import { messageHandler } from "./message.socket";
 
 export default function registerSocketHandlers(io: Server, socket: Socket) {
-  // testHandler(io, socket);
   userSocketHandler(io, socket);
+  // messageHandler(io, socket);
 }

@@ -3,6 +3,7 @@ import { Event, Router, RouterLink } from '@angular/router';
 import { AuthServices } from '../../services/auth.service';
 import { LoginUserType } from '../../types/types';
 import { catchError, throwError } from 'rxjs';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-login',
@@ -15,7 +16,11 @@ export class LoginComponent {
   errorMessage = signal('');
   errorMessageTimeoutId: any;
 
-  constructor(public authService: AuthServices, private router: Router) {}
+  constructor(
+    public authService: AuthServices,
+    private router: Router,
+    private socketService: SocketService
+  ) {}
   login(event: any, data: LoginUserType) {
     event.preventDefault();
 
@@ -49,6 +54,7 @@ export class LoginComponent {
       )
       .subscribe((res: any) => {
         this.authService.currentUser.set(res.user);
+        this.socketService.connectSocket(res.user._id);
         sessionStorage.setItem('token', res.token);
         this.loading.set(false);
         this.router.navigate(['/']);

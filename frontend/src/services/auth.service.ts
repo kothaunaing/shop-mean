@@ -35,7 +35,7 @@ export class AuthServices {
       .get(this.apiUrl + '/logout', { withCredentials: true })
       .subscribe((res) => {
         console.log('Logged out successfully');
-        this.socketService.disconnectUser(this.currentUser()?._id!);
+        this.socketService.disconnectUser();
         sessionStorage.removeItem('token');
         this.currentUser.set(null);
         this.router.navigate(['/login']);
@@ -61,6 +61,8 @@ export class AuthServices {
       )
       .subscribe((res: any) => {
         this.checkingAuth.set(false);
+
+        this.socketService.connectSocket(res.user._id);
 
         this.currentUser.set(res.user);
       });

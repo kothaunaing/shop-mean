@@ -19,7 +19,6 @@ export class AppComponent {
   constructor(public authService: AuthServices) {
     effect(() => {
       if (this.authService.currentUser()) {
-        this.socketService.connectUser(this.authService.currentUser()?._id!);
         this.fetchCartItemsCount();
       } else {
         this.cartService.cartItemsCount = 0;

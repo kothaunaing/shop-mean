@@ -1,38 +1,52 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { io, Socket } from 'socket.io-client';
-import { OnlineUserType } from '../types/types';
+import { Message, OnlineUserType } from '../types/types';
 
 @Injectable({
   providedIn: 'root',
 })
 export class SocketService {
-  private socket: Socket;
+  public socket: Socket = io();
 
   apiBaseUrl = 'http://localhost:5000';
 
   constructor() {
-    this.socket = io(this.apiBaseUrl);
+    // this.socket = io(this.apiBaseUrl);
   }
 
-  connectUser(userId: string) {
-    this.socket.emit('user_connected', userId);
+  connectSocket(userId: string) {
+    if (!userId) {
+      return;
+    }
+    const socket = io(this.apiBaseUrl, { query: { userId } });
+    socket.connect();
+    this.socket = socket;
   }
 
-  disconnectUser(userId: string) {
-    this.socket.emit('user_disconnected', userId);
+  // connectUser(userId: string) {
+  //   this.socket.emit('user_connected', userId);
+  // }
+
+  disconnectUser() {
+    if (this.socket.connected) {
+      this.socket.disconnect();
+    }
   }
 
-  onOnlineUsersChange() {
-    let user: OnlineUserType | undefined = undefined;
-
-    this.socket.on('online_users_change', (onlineUser: OnlineUserType) => {
-      if (onlineUser) {
-        console.log(onlineUser);
-        user = onlineUser;
-      }
+  onOnlineUsersChange(): Observable<OnlineUserType> {
+    return new Observable((observer) => {
+      this.socket.on('online_users_change', (onlineUser: OnlineUserType) => {
+        observer.next(onlineUser);
+      });
     });
+  }
 
-    return user;
+  onNewMessage(): Observable<Message> {
+    return new Observable((observer) => {
+      this.socket.on('new_message', (message: Message) => {
+        observer.next(message);
+      });
+    });
   }
 }

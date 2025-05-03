@@ -3,6 +3,7 @@ import { Router, RouterLink } from '@angular/router';
 import { AuthServices } from '../../services/auth.service';
 import { CreateUserType } from '../../types/types';
 import { catchError, of, throwError } from 'rxjs';
+import { SocketService } from '../../services/socket.service';
 
 @Component({
   selector: 'app-register',
@@ -15,7 +16,11 @@ export class RegisterComponent {
   errorMessage = signal('');
   errorMessageTimeoutId: any;
 
-  constructor(public authService: AuthServices, private router: Router) {}
+  constructor(
+    public authService: AuthServices,
+    private router: Router,
+    private socketService: SocketService
+  ) {}
 
   register(userData: CreateUserType) {
     clearTimeout(this.errorMessageTimeoutId);
@@ -63,6 +68,7 @@ export class RegisterComponent {
       )
       .subscribe((res: any) => {
         this.authService.currentUser.set(res.user);
+        this.socketService.connectSocket(res.user._id);
         sessionStorage.setItem('token', res.token);
         this.loading.set(false);
         this.router.navigate(['/']);

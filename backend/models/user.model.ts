@@ -34,7 +34,10 @@ const userSchema = new Schema(
       type: Boolean,
       default: false,
     },
-    lastOnline: { type: Number },
+    lastOnline: {
+      type: Date,
+      default: Date.now,
+    },
     verificationCode: String,
     verificationCodeExpiresAt: String,
   },

@@ -10,57 +10,13 @@
     </a>
     <div class="flex flex-col h-full">
       @if(chatService.page() === "chat"){
-      <div class="flex-1 flex flex-col h-full">
-        <div
-          class="p-3 flex gap-2 items-center border-b border-b-slate-300 header"
-        >
-          <button
-            (click)="chatService.changePage('home')"
-            class="p-2 rounded-full shadow-md cursor-pointer hover:opacity-60 size-10"
-          >
-            <fa-icon [icon]="faArrowLeft" />
-          </button>
-          <p class="font-semibold text-lg">
-            {{ userToChat.name }}
-            {{
-              userToChat._id === authService.currentUser()?._id ? "(me)" : ""
-            }}
-            @if(isUserOnline(userToChat._id!)){<span
-              class="text-sm text-green-500"
-              >Online</span
-            >} @else {
-            <span class="text-sm text-red-500">Offline</span>
-            }
-          </p>
-        </div>
-        <div class="flex-1 overflow-y-auto p-2 space-y-2 flex flex-col">
-          <div>Hi what are you doing</div>
-          <div>Hi what are you doing</div>
-          <div>Hi what are you doing</div>
-
-          <div>Hi what are you doing</div>
-          <div>Hi what are you doing</div>
-          <div>Hi what are you doing</div>
-        </div>
-
-        <div class="border-t border-t-slate-300 p-3 flex items-center gap-2">
-          <textarea
-            placeholder="Type a message..."
-            class="border flex-1 border-amber-500 rounded-2xl resize-none p-1 px-3 placeholder-slate-400 outline-amber-600"
-          ></textarea>
-          <button
-            class="p-2 rounded-full shadow-md cursor-pointer hover:opacity-60 size-10"
-          >
-            <fa-icon [icon]="faPaperPlane" />
-          </button>
-        </div>
-      </div>
+      <messages-component class="flex flex-col h-full" />
       } @else {
       <div
         class="p-3 md:min-w-[200px] lg:min-w-[300px] space-y-2 h-full overflow-y-auto"
       >
         <div class="mb-3 border-b p-2 border-b-slate-300">
-          <p>{{ chatService.onlineUsers.length }} online users</p>
+          <p>{{ getNumberOnlineUsers() }} online users</p>
         </div>
         @for(user of chatService.usersData?.users; track user._id){
         <div

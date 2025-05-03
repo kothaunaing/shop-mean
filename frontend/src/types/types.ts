@@ -66,3 +66,13 @@ export interface OnlineUserType {
   userId: string;
   lastOnline: string;
 }
+
+export interface Message {
+  sender: string;
+  receiver: string;
+  text: string;
+  timestamp: string;
+  updatedAt: string;
+  createdAt: string;
+  _id: string;
+}
