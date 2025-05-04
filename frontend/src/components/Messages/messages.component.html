@@ -21,12 +21,38 @@
       }
     </p>
   </div>
-  <div class="flex-1 overflow-y-auto p-2 space-y-2 flex flex-col">
-    @for(message of chatService.messages; track message._id){
-    <div class="p-2 border rounded-2xl border-slate-200 shadow-md">
-      {{ message.text }}
+  <div #messages class="flex-1 overflow-y-auto p-2 space-y-3 flex flex-col">
+    @if (this.chatService.loading()){
+    <div class="text-center min-h-full flex items-center justify-center">
+      Loading messages...
     </div>
-    }
+    } @else { @for(message of chatService.messages; track message._id){
+    <div class="">
+      @if(isMyMessage(message.sender)){
+      <div class="flex justify-end">
+        <div
+          class="p-4 shadow-md rounded-2xl bg-blue-300 border border-slate-200"
+        >
+          <p>{{ message.text }}</p>
+
+          <p class="mt-2 text-sm text-slate-500">
+            {{ formatCreatedAt(message.createdAt) }}
+          </p>
+        </div>
+      </div>
+      } @else {
+      <div class="flex justify-start">
+        <div class="p-4 shadow-md rounded-2xl border border-slate-200">
+          <p>{{ message.text }}</p>
+          <p class="mt-2 text-sm text-slate-500">
+            {{ formatCreatedAt(message.createdAt) }}
+          </p>
+        </div>
+      </div>
+      }
+    </div>
+    } }
+    <div #latest></div>
   </div>
 
   <div class="border-t border-t-slate-300 p-3 flex items-center gap-2">

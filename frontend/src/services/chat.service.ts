@@ -18,6 +18,7 @@ export class ChatService {
   page = signal('home');
   onlineUsers: OnlineUserType[] = [];
   messages: Message[] = [];
+  loading = signal(false);
   userToChat!: CreateUserType;
 
   constructor(private socketService: SocketService) {}
@@ -52,6 +53,7 @@ export class ChatService {
 
   async getMessages(senderId: string, receiverId: string) {
     try {
+      this.loading.set(true);
       const res = await axios.get(this.apiUrl + '/message/get-all', {
         headers: getTokenAndReturnHeader('token'),
         params: {
@@ -63,6 +65,8 @@ export class ChatService {
       console.log(res.data);
     } catch (error: any) {
       console.log('Error in getMessages: ' + error);
+    } finally {
+      this.loading.set(false);
     }
   }
 }

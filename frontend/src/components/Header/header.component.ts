@@ -7,6 +7,7 @@ import { AddProductService } from '../../services/add-product.service';
 import {
   faAdd,
   faCartShopping,
+  faMessage,
   faSearch,
 } from '@fortawesome/free-solid-svg-icons';
 import { SearchComponent } from '../SearchComponent/search.component';
@@ -30,6 +31,7 @@ export class HeaderComponent {
   faAdd = faAdd;
   faSearch = faSearch;
   faCartShopping = faCartShopping;
+  faMessage = faMessage;
 
   confirmLogout = signal(false);
   constructor(

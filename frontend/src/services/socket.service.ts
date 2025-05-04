@@ -7,21 +7,18 @@ import { Message, OnlineUserType } from '../types/types';
   providedIn: 'root',
 })
 export class SocketService {
-  public socket: Socket = io();
+  public socket: Socket | null = null;
 
   apiBaseUrl = 'http://localhost:5000';
-
-  constructor() {
-    // this.socket = io(this.apiBaseUrl);
-  }
 
   connectSocket(userId: string) {
     if (!userId) {
       return;
     }
-    const socket = io(this.apiBaseUrl, { query: { userId } });
-    socket.connect();
-    this.socket = socket;
+    this.socket = io(this.apiBaseUrl, {
+      query: { userId },
+      reconnection: true,
+    });
   }
 
   // connectUser(userId: string) {
@@ -29,24 +26,40 @@ export class SocketService {
   // }
 
   disconnectUser() {
-    if (this.socket.connected) {
+    if (this.socket) {
       this.socket.disconnect();
+      this.socket = null;
     }
   }
 
   onOnlineUsersChange(): Observable<OnlineUserType> {
     return new Observable((observer) => {
-      this.socket.on('online_users_change', (onlineUser: OnlineUserType) => {
+      if (!this.socket) return;
+
+      const handler = (onlineUser: OnlineUserType) => {
         observer.next(onlineUser);
-      });
+      };
+
+      this.socket.on('online_users_change', handler);
+
+      return () => {
+        this.socket?.off('online_users_chage', handler);
+      };
     });
   }
 
   onNewMessage(): Observable<Message> {
     return new Observable((observer) => {
-      this.socket.on('new_message', (message: Message) => {
+      if (!this.socket) return;
+
+      const handler = (message: Message) => {
         observer.next(message);
-      });
+      };
+      this.socket.on('new_message', handler);
+
+      return () => {
+        this.socket?.off('new_message', handler);
+      };
     });
   }
 }

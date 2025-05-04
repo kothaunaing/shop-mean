@@ -41,7 +41,14 @@
     }
     <div class="flex items-center gap-2">
       @if(authService.currentUser()){
-      <div class="border-r-[2px] border-r-amber-600">
+      <div class="border-r-[2px] border-r-amber-600 flex">
+        <a
+          routerLink="/chat"
+          routerLinkActive="shadow-md"
+          class="hover:shadow-md rounded-full cursor-pointer p-2 flex items-center justify-center gap-1 mr-2"
+        >
+          <fa-icon [icon]="faMessage" />
+        </a>
         <a
           routerLink="/cart"
           routerLinkActive="shadow-md"

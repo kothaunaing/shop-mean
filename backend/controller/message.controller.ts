@@ -12,7 +12,7 @@ export async function getAllMessages(req: CustomRequest, res: Response) {
   try {
     const { senderId, receiverId } = req.query;
 
-    console.log(senderId, receiverId);
+    // console.log(senderId, receiverId);
 
     if (!senderId || !receiverId) {
       res
@@ -43,7 +43,7 @@ export async function sendMessage(req: CustomRequest, res: Response) {
     const { receiverId, senderId, text } = req.body as MessageDateType;
 
     const message = await saveMessageToDatabase({ receiverId, senderId, text });
-    const receiver = await User.findById(message.receiverId);
+    const receiver = await User.findById(message.receiver);
 
     if (!receiver) {
       console.log("No receiver found, but message is saved to database");
@@ -51,7 +51,7 @@ export async function sendMessage(req: CustomRequest, res: Response) {
     }
 
     if (receiver?.isOnline) {
-      console.log(receiver.socketId);
+      // console.log(receiver.socketId);
       io.to(receiver?.socketId!).emit("new_message", message);
       console.log("user is online sent message");
     } else {

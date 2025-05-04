@@ -1,6 +1,7 @@
+@if(authService.currentUser()){
 <main class="flex-col fixed inset-0 z-50 bg-black/60">
   <div
-    class="m-2 max-w-3xl mx-auto h-full flex flex-col p-4 bg-white rounded-md relative"
+    class="m-2 max-w-3xl mx-auto h-full flex flex-col p-4 bg-white rounded-4xl relative"
   >
     <a
       routerLink="/"
@@ -39,3 +40,6 @@
     </div>
   </div>
 </main>
+} @else {
+<div>You have to log in first</div>
+}

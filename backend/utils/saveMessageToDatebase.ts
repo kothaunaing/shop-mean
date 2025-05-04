@@ -16,7 +16,9 @@ export async function saveMessageToDatabase(messageData: MessageDateType) {
 
   return {
     _id: message._id,
-    ...messageData,
+    text: message.text,
+    sender: message.sender,
+    receiver: message.receiver,
     timestamp: message.timestamp,
     createdAt: message.createdAt,
     updatedAt: message.updatedAt,
